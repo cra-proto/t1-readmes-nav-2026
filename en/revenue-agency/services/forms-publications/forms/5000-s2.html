@@ -30,7 +30,7 @@ notedlinks:
     link: "https://cra-proto.github.io/t1-readmes-nav-2026/index.html"
 ---
 <h1 property="name" id="wb-cont" dir="ltr">5000-S2&nbsp;Schedule 2 - Federal Amounts Transferred from your Spouse or Common-Law Partner (for all except QC and non-residents)</h1>
-<p class="small mrgn-tp-sm"><strong>You may be looking for:</strong> <a href="/content/canadasite/en/revenue-agency/services/forms-publications/tax-packages-years/general-income-tax-benefit-package.html">Get a (2025) T1 income tax package</a></p>
+<p class="small mrgn-tp-sm"><strong>You may be looking for:</strong> <a href="/t1-readmes-nav-2026/en/revenue-agency/services/forms-publications/tax-packages-years/general-income-tax-benefit-package.html"><mark>Get a (2025) T1 income tax package</mark></a></p>
 <div class="clearfix" aria-hidden="true"></div>
 
 <!--PDF instructions-->
@@ -104,7 +104,7 @@ notedlinks:
   <h3 id="prvs-yrs">Get a version from the 9 previous years (5000-S2)</h3>
   <p>To ensure you access the <strong>correct</strong> form, enter the <strong>year </strong>in the table filter.</p>
   <section data-wb-jsonmanager='{
-   "url": "/content/dam/cra-arc/test/parissa-json/5000-s2-table-data.json#/data",
+   "url": "/t1-readmes-nav-2026/_includes/json/5000-s2-table-data.json#/data",
       "name": "forms"}'></section>
   <section class="table-responsive mrgn-tp-lg">
     <table class="wb-tables table table-striped table-condensed table-hover filterEmphasis provisional" id="year-filter" data-wb-json='{ "url": "#[forms]", "source": "#tbl2", "tobeclone": "tr", "mapping": [{ "selector": "th:nth-child(1)", "value": "/year", "placeholder": "[[year]]" }, { "selector": "td:nth-child(2)>a", "value": "/fill_pdf_en/0" }, { "selector": "td:nth-child(2)>a", "value": "/fill_pdf_en/1", "attr": "href" }, { "selector": "td:nth-child(3)>a", "value": "/stnd_pdf_en/0" }, { "selector": "td:nth-child(3)>a", "value": "/stnd_pdf_en/1", "attr": "href" }, { "selector": "td:nth-child(4)>a", "value": "/lrge_pdf_en/0" }, { "selector": "td:nth-child(4)>a", "value": "/lrge_pdf_en/1", "attr": "href" }, { "selector": "td:nth-child(5)>a", "value": "/dwld_etx_en/0" }, { "selector": "td:nth-child(5)>a", "value": "/dwld_etx_en/1", "attr": "href" } ] }' data-wb-tables=' { "ordering": true, "order": [ [0, "desc"] ], "paging": false, "retrieve": true }'>
@@ -139,7 +139,7 @@ notedlinks:
   <!-- URL mapping, a central management to avoid racing condition -->
   <section data-wb-urlmapping='{ "year": [{ "action": "tblfilter", "source": "#year-filter", "column": 0, "value": "{qval}", "match": "^[1-2][0-9][0-9][0-9]$", "default": " " }, { "action": "patch", "source": "#define-the-year", "base": "/years", "match": "^[0-9][0-9][0-9][0-9]$", "default": "0000", "patches": [{ "op": "copy", "from": "/years/{qval}", "path": "/select/year" }] } ], "region": [{ "action": "patch", "source": "#define-the-region", "base": "/regions", "match": "^[a-z][a-z]$", "default": "ni", "patches": [{ "op": "copy", "from": "/regions/{qval}", "path": "/select/region" }] }], "multiplequery": true } '></section>
   <!-- Data source -->
-  <section id="sourceData" data-wb-jsonmanager='{ "url": "/content/dam/cra-arc/test/parissa-json/yr-prov.json", "patches": { "op": "add", "path": "/select", "value": {} }, "name": "sourceData", "debug": false } '></section>
+  <section id="sourceData" data-wb-jsonmanager='{ "url": "/t1-readmes-nav-2026/_includes/json/yr-prov.json", "patches": { "op": "add", "path": "/select", "value": {} }, "name": "sourceData", "debug": false } '></section>
   <!-- Manager to receive the URL mapping update from the "year" parameter -->
   <section id="define-the-year" data-wb-jsonmanager-reload data-wb-jsonmanager='{ "url": "#[sourceData]", "wait": true, "name": "year-set", "debug": false } '></section>
   <section id="define-the-region" data-wb-jsonmanager-reload data-wb-jsonmanager='{ "url": "#[sourceData]", "name": "region-set", "debug": false } '></section>
@@ -155,7 +155,7 @@ notedlinks:
 <!-- Archive section -->
 <li>
 <span class="fas fa-archive text-muted fa-lg fa-li"></span>
-<section data-ajax-replace="/content/dam/cra-arc/test/parissa-json/archived-lac.txt #lac-en">
+<section data-ajax-replace="/t1-readmes-nav-2026/_includes/json/archived-lac.txt #lac-en">
 </li>
 </ul>
 <!--Related documents-->
