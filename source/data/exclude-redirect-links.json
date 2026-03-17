@@ -30,33 +30,5 @@
   {
     "origin": "https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s2/5000-s2-fill-25e.pdf",
     "destination": "https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s2/5000-s2-fill-25e.pdf"
-  },
-  {
-    "origin": "https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s2/5000-s2-25e.pdf",
-    "destination": "https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s2/5000-s2-25e.pdf"
-  },
-  {
-    "origin": "https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s2/5000-s2-lp-25e.pdf",
-    "destination": "https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s2/5000-s2-lp-25e.pdf"
-  },
-  {
-    "origin": "https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s2/5000-s2-25e.txt",
-    "destination": "https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5000-s2/5000-s2-25e.txt"
-  },
-  {
-    "origin": "https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5009-r/5009-r-fill-25e.pdf",
-    "destination": "https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5009-r/5009-r-fill-25e.pdf"
-  },
-  {
-    "origin": "https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5009-r/5009-r-25e.pdf",
-    "destination": "https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5009-r/5009-r-25e.pdf"
-  },
-  {
-    "origin": "https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5009-r/5009-r-lp-25e.pdf",
-    "destination": "https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5009-r/5009-r-lp-25e.pdf"
-  },
-  {
-    "origin": "https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5009-r/5009-r-25e.txt",
-    "destination": "https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/5009-r/5009-r-25e.txt"
   }
 ]
