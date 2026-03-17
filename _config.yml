@@ -25,7 +25,7 @@ creator:
 # Custom settings
 developerOptions: false
 devOptionsLocStore: "gitCRATemplateDevOptions"
-exitByURL: true
+exitByURL: false
 exitPage:
   en: "/t1-readmes-nav-2026/source/exit-intent-e.html"
   fr: "/t1-readmes-nav-2026/source/exit-intent-f.html"
