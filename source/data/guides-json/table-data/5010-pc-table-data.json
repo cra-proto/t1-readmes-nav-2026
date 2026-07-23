@@ -13,8 +13,8 @@
     },
     {
       "year": "2024",
-      "html_acc_en": ["British Columbia tax information for 2024", "https://www.canada.ca/en/revenue-agency/services/forms-publications/tax-packages-years/archived-general-income-tax-benefit-package-2024/british-columbia/5010-pc.html"],
-      "html_acc_fr": ["Renseignements sur l'impôt de la Colombie-Britannique pour 2024", "https://www.canada.ca/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition/archivee-trousse-generale-impot-prestations-2024/colombie-britannique/5010-pc.html"],
+      "html_acc_en": ["<span class=\"nowrap\">British Columbia tax information for 2024</span>", "https://www.canada.ca/en/revenue-agency/services/forms-publications/tax-packages-years/archived-general-income-tax-benefit-package-2024/british-columbia/5010-pc.html"],
+      "html_acc_fr": ["<span class=\"nowrap\">Renseignements sur l'impôt de la Colombie-Britannique</span> pour 2024", "https://www.canada.ca/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition/archivee-trousse-generale-impot-prestations-2024/colombie-britannique/5010-pc.html"],
       "stnd_pdf_en": ["2024 - Standard PDF", "/content/dam/cra-arc/formspubs/pub/5010-pc/5010-pc-24e.pdf"],
       "stnd_pdf_fr": ["2024 - PDF standard", "/content/dam/cra-arc/formspubs/pub/5010-pc/5010-pc-24f.pdf"],
       "lrge_pdf_en": ["2024 - Large print PDF", "/content/dam/cra-arc/formspubs/pub/5010-pc/5010-pc-lp-24e.pdf"],
