@@ -111,7 +111,7 @@ Modified date: August 1, 2023
 		<li required="((pdf)) || ((pdfFillable))"><span class="fas fa-universal-access text-muted fa-lg fa-li"></span>
 		  <section data-ajax-replace="/content/dam/cra-arc/formspubs/include/altformat.txt#altformat-fra">
 		  <h3>Demandez le formulaire en format substitut</h3>
-		  <p>Vous pouvez commander le formulaire en d'autres formats, comme en fichier audio num&#233;rique, en texte &#233;lectronique, en braille et en gros caract&#232;res.</p>
+		  <p>Vous pouvez commander le formulaire en fichier audio num&#233;rique, en texte &#233;lectronique, en braille et en gros caract&#232;res afin qu'il vous soit envoyé par la poste.</p>
 		  <ul>
 			  <li>
 			  <a href="/content/canadasite/fr/agence-revenu/services/formulaires-publications/aide-formulaires-publications/a-propos-formats-alternatifs-substituts.html" class="nowrap">Commander des formats substituts pour les personnes handicap&#233;es</a></li>
