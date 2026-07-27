@@ -1,0 +1,188 @@
+<section id="table-en">
+  <section class="table-responsive mrgn-tp-lg">
+    <table class="wb-tables table table-striped table-condensed table-hover filterEmphasis provisional" 
+    id="year-filter" data-wb-json='{
+    "url": "#[forms]",
+    "source": "#tbl2",
+    "tobeclone": "tr",
+    "mapping": [
+        {
+            "selector": "th:nth-child(1)",
+            "value": "/year",
+            "placeholder": "[[year]]"
+        },
+        {
+            "selector": "td:nth-child(2)>a",
+            "value": "/html_acc_en/0",
+            "isHTML": true
+        },
+        {
+            "selector": "td:nth-child(2)>a",
+            "value": "/html_acc_en/1",
+            "attr": "href"
+        },
+        {
+            "selector": "td:nth-child(3)>a",
+            "value": "/stnd_pdf_en/0"
+        },
+        {
+            "selector": "td:nth-child(3)>a",
+            "value": "/stnd_pdf_en/1",
+            "attr": "href"
+        },
+        {
+            "selector": "td:nth-child(4)>a",
+            "value": "/lrge_pdf_en/0"
+        },
+        {
+            "selector": "td:nth-child(4)>a",
+            "value": "/lrge_pdf_en/1",
+            "attr": "href"
+        },
+        {
+            "selector": "td:nth-child(5)>a",
+            "value": "/dwld_etx_en/0"
+        },
+        {
+            "selector": "td:nth-child(5)>a",
+            "value": "/dwld_etx_en/1",
+            "attr": "href"
+        }
+    ]
+}' data-wb-tables=' { "ordering": false, "order": [[0, "desc"]], "paging": false, "retrieve": true }'>
+      <caption class="wb-inv">Available formats for the 10 previous years</caption>
+      <thead>
+        <tr>
+          <th scope="col">Year</th>
+          <th scope="col">HTML</th>
+          <th scope="col">Standard print PDF</th>
+          <th scope="col">Large print PDF</th>
+          <th scope="col">Electronic text</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </section>
+  <template id="tbl2">
+    <table>
+      <tr>
+        <th scope="row">[[year]]</th>
+        <td><a class="small"></a></td>
+        <td><a class="small"></a></td>
+        <td><a class="small"></a></td>
+        <td><a class="small"></a></td>
+      </tr>
+    </table>
+  </template>
+  <button type="button" class="btn btn-default mrgn-tp-md" data-wb-doaction='{ "action": "tblfilter", "source": "#year-filter", "column": 0, "value": "" }'>Clear filter</button>
+  <!-- URL mapping, a central management to avoid racing condition -->
+  <section data-wb-urlmapping='{ "yr": [{ "action": "tblfilter", "source": "#year-filter", "column": 0, "value": "{qval}", "match": "^[1-2][0-9][0-9][0-9]$", "default": " " }, { "action": "patch", "source": "#define-the-year", "base": "/years", "match": "^[0-9][0-9][0-9][0-9]$", "default": "0000", "patches": [{ "op": "copy", "from": "/years/{qval}", "path": "/select/year" }] } ], "rgn": [{ "action": "patch", "source": "#define-the-region", "base": "/regions", "match": "^[a-z][a-z]$", "default": "ni", "patches": [{ "op": "copy", "from": "/regions/{qval}", "path": "/select/region" }] }], "multiplequery": true } '></section>
+  <!-- Data source -->
+  <section id="sourceData" data-wb-jsonmanager='{ "url": "/content/dam/cra-arc/formspubs/t1-includes/yr-prov.json", "patches": { "op": "add", "path": "/select", "value": { "region": ["", "", "", ""] } }, "name": "sourceData", "debug": false } '></section>
+  <!-- Manager to receive the URL mapping update from the "year" parameter -->
+  <section id="define-the-year" data-wb-jsonmanager-reload data-wb-jsonmanager='{ "url": "#[sourceData]", "wait": true, "name": "year-set", "debug": false } '></section>
+  <section id="define-the-region" data-wb-jsonmanager-reload data-wb-jsonmanager='{ "url": "#[sourceData]", "name": "region-set", "debug": false } '></section>
+  <!-- Final JSON manager that assemble the paralel operation, This ensure that all operations are completed before to proceed, so this avoid a race condition -->
+  <section data-wb-jsonmanager='{ "url": [{ "url": "#[year-set]/select" }, { "url": "#[region-set]/select" }], "name": "find-other-form", "patches": { "op": "add", "path": "/emptystr", "value": "", "rfds:label": "This patch is used as an helper to render the paragraph visibility" }, "debug": false } '></section>
+  <!-- Render the personalized paragraph content, also it will only being display if valid info was provided -->
+  <section data-wb-json='{ "url": "#[find-other-form]", "streamline": true, "template": "template", "mapping": [{ "selector": "[data-year]", "value": "/year" }, { "selector": "[data-region]", "value": "/region/0" }, { "selector": "[data-anchor]", "value": "/year", "placeholder": "[[years]]" }, { "selector": "[data-anchor]", "value": "/region/0", "placeholder": "[[regions]]" }, { "selector": "[data-anchor]", "value": "/year", "attr": "href", "placeholder": "--years--" }, { "selector": "[data-anchor]", "value": "/region/2", "attr": "href", "placeholder": "--regions--" }, { "rdfs:label": "Unhide if we do have a valid year value", "test": "fn:isLiteral", "assess": "/year", "mapping": { "selector": "[data-paragraph]", "attr": "class", "placeholder": "- hidden -", "value": "/emptystr" } }, { "rdfs:label": "Unhide if we do have a valid region value", "test": "fn:getValue", "assess": "/region/0", "operand": "neq", "expect": "", "mapping": { "selector": "[data-paragraph]", "attr": "class", "placeholder": "* hidden *", "value": "/emptystr" } } ] } '>
+    <template>
+      <p data-paragraph class="mrgn-tp-lg - hidden -* hidden *">To find other <strong><span data-year>year</span></strong> forms or guides you may need <strong><span data-region>region</span></strong>, return to the <a data-anchor href="https://www.canada.ca/en/revenue-agency/services/forms-publications/tax-packages-years/archived-general-income-tax-benefit-package---years----regions--.html">[[years]] Income tax package [[regions]]</a>.</p>
+    </template>
+  </section>
+</section>
+<section id="table-fr">
+  <section class="table-responsive mrgn-tp-lg">
+    <table class="wb-tables table table-striped table-condensed table-hover filterEmphasis provisional" 
+    id="year-filter" data-wb-json='{
+    "url": "#[forms]",
+    "source": "#tbl2",
+    "tobeclone": "tr",
+    "mapping": [
+        {
+            "selector": "th:nth-child(1)",
+            "value": "/year",
+            "placeholder": "[[year]]"
+        },
+        {
+            "selector": "td:nth-child(2)>a",
+            "value": "/html_acc_fr/0",
+            "isHTML": true
+        },
+        {
+            "selector": "td:nth-child(2)>a",
+            "value": "/html_acc_fr/1",
+            "attr": "href"
+        },
+        {
+            "selector": "td:nth-child(3)>a",
+            "value": "/stnd_pdf_fr/0"     
+        },
+        {
+            "selector": "td:nth-child(3)>a",
+            "value": "/stnd_pdf_fr/1",
+            "attr": "href"
+        },
+        {
+            "selector": "td:nth-child(4)>a",
+            "value": "/lrge_pdf_fr/0"
+        },
+        {
+            "selector": "td:nth-child(4)>a",
+            "value": "/lrge_pdf_fr/1",
+            "attr": "href"
+        },
+        {
+            "selector": "td:nth-child(5)>a",
+            "value": "/dwld_etx_fr/0"
+        },
+        {
+            "selector": "td:nth-child(5)>a",
+            "value": "/dwld_etx_fr/1",
+            "attr": "href"
+        }
+    ]
+}' data-wb-tables=' { "ordering": false, "order": [[0, "desc"]], "paging": false, "retrieve": true }'>
+      <caption class="wb-inv">Formats disponibles pour les 10 dernières années</caption>
+      <thead>
+        <tr>
+          <th scope="col">Année</th>
+          <th scope="col">HTML</th>
+          <th scope="col">PDF standard</th>
+          <th scope="col">PDF en gros caractères</th>
+          <th scope="col">Texte électronique</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </section>
+  <template id="tbl2">
+    <table>
+      <tr>
+        <th scope="row">[[year]]</th>
+        <td><a class="small"></a></td>
+        <td><a class="small"></a></td>
+        <td><a class="small"></a></td>
+        <td><a class="small"></a></td>
+      </tr>
+    </table>
+  </template>
+  <button type="button" class="btn btn-default mrgn-tp-md" data-wb-doaction='{ "action": "tblfilter", "source": "#year-filter", "column": 0, "value": "" }'>Réinitialiser le filtre</button>
+  <!-- URL mapping, a central management to avoid racing condition -->
+  <section data-wb-urlmapping='{ "yr": [{ "action": "tblfilter", "source": "#year-filter", "column": 0, "value": "{qval}", "match": "^[1-2][0-9][0-9][0-9]$", "default": " " }, { "action": "patch", "source": "#define-the-year", "base": "/years", "match": "^[0-9][0-9][0-9][0-9]$", "default": "0000", "patches": [{ "op": "copy", "from": "/years/{qval}", "path": "/select/year" }] } ], "rgn": [{ "action": "patch", "source": "#define-the-region", "base": "/regions", "match": "^[a-z][a-z]$", "default": "ni", "patches": [{ "op": "copy", "from": "/regions/{qval}", "path": "/select/region" }] }], "multiplequery": true } '></section>
+  <!-- Data source -->
+  <section id="sourceData" data-wb-jsonmanager='{ "url": "/content/dam/cra-arc/formspubs/t1-includes/yr-prov.json", "patches": { "op": "add", "path": "/select", "value": { "region": ["", "", "", ""] } }, "name": "sourceData", "debug": false } '></section>
+  <!-- Manager to receive the URL mapping update from the "year" parameter -->
+  <section id="define-the-year" data-wb-jsonmanager-reload data-wb-jsonmanager='{ "url": "#[sourceData]", "wait": true, "name": "year-set", "debug": false } '></section>
+  <section id="define-the-region" data-wb-jsonmanager-reload data-wb-jsonmanager='{ "url": "#[sourceData]", "name": "region-set", "debug": false } '></section>
+  <!-- Final JSON manager that assemble the paralel operation, This ensure that all operations are completed before to proceed, so this avoid a race condition -->
+  <section data-wb-jsonmanager='{ "url": [{ "url": "#[year-set]/select" }, { "url": "#[region-set]/select" }], "name": "find-other-form", "patches": { "op": "add", "path": "/emptystr", "value": "", "rfds:label": "This patch is used as an helper to render the paragraph visibility" }, "debug": false } '></section>
+  <!-- Render the personalized paragraph content, also it will only being display if valid info was provided -->
+  <section data-wb-json='{ "url": "#[find-other-form]", "streamline": true, "template": "template", "mapping": [{ "selector": "[data-year]", "value": "/year" }, { "selector": "[data-region]", "value": "/region/0" }, { "selector": "[data-anchor]", "value": "/year", "placeholder": "[[years]]" }, { "selector": "[data-anchor]", "value": "/region/0", "placeholder": "[[regions]]" }, { "selector": "[data-anchor]", "value": "/year", "attr": "href", "placeholder": "--years--" }, { "selector": "[data-anchor]", "value": "/region/2", "attr": "href", "placeholder": "--regions--" }, { "rdfs:label": "Unhide if we do have a valid year value", "test": "fn:isLiteral", "assess": "/year", "mapping": { "selector": "[data-paragraph]", "attr": "class", "placeholder": "- hidden -", "value": "/emptystr" } }, { "rdfs:label": "Unhide if we do have a valid region value", "test": "fn:getValue", "assess": "/region/0", "operand": "neq", "expect": "", "mapping": { "selector": "[data-paragraph]", "attr": "class", "placeholder": "* hidden *", "value": "/emptystr" } } ] } '>
+    <template>
+      <p data-paragraph class="mrgn-tp-lg - hidden -* hidden *">Pour trouver d’autres formulaires ou guides de l'année <strong><span data-year>année</span></strong> dont vous pourriez avoir besoin <strong><span data-region>région</span></strong>, retournez à la <a data-anchor href=https://www.canada.ca/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition/archivee-trousse-generale-impot-prestations---years----regions--.html>trousse d’impôt sur le revenu de [[years]] [[regions]]</a>.</p>
+    </template>
+  </section>
+</section>
