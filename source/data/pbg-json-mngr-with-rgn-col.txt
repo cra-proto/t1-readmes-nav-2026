@@ -14,23 +14,20 @@
       {
         "selector": "td:nth-child(2)",
         "value": "/regions_en",
-        "placeholder": "[[applicable_regions]]",
-        "isHTML": true
+        "placeholder": "[[applicable_regions]]"
       },
       {
         "selector": "td:nth-child(3)>a",
-        "value": "/html_acc_en/0",
-        "isHTML": true
+        "value": "/fill_pdf_en/0"
       },
       {
         "selector": "td:nth-child(3)>a",
-        "value": "/html_acc_en/1",
+        "value": "/fill_pdf_en/1",
         "attr": "href"
       },
       {
         "selector": "td:nth-child(4)>a",
-        "value": "/stnd_pdf_en/0",
-        "isHTML": true
+        "value": "/stnd_pdf_en/0"
       },
       {
         "selector": "td:nth-child(4)>a",
@@ -39,8 +36,7 @@
       },
       {
         "selector": "td:nth-child(5)>a",
-        "value": "/lrge_pdf_en/0",
-        "isHTML": true
+        "value": "/lrge_pdf_en/0"
       },
       {
         "selector": "td:nth-child(5)>a",
@@ -49,8 +45,7 @@
       },
       {
         "selector": "td:nth-child(6)>a",
-        "value": "/dwld_etx_en/0",
-        "isHTML": true
+        "value": "/dwld_etx_en/0"
       },
       {
         "selector": "td:nth-child(6)>a",
@@ -61,13 +56,13 @@
    }
     ' data-wb-tables=' { "ordering": false, "order": [ [0, "desc"] ], "paging": false, "retrieve": true }'>
       <caption>
-      Available formats for the 10 previous years (download e-text files before use)
+      Available formats for the 9 previous years (download fillable PDF and e-text files before use)
       </caption>
       <thead>
         <tr>
-          <th scope="col">Year&nbsp;&nbsp;</th>
-          <th scope="col">Provinces or territories</th>
-          <th scope="col">HTML</th>
+          <th scope="col">Year&nbsp;&nbsp;<br></th>
+          <th scope="col">Provinces or<br> territories</th>
+          <th scope="col">Fillable PDF</th>
           <th scope="col">Standard PDF</th>
           <th scope="col">Large print PDF</th>
           <th scope="col">Electronic text</th>
@@ -127,18 +122,16 @@
       },
       {
         "selector": "td:nth-child(3)>a",
-        "value": "/html_acc_fr/0",
-        "isHTML": true
+        "value": "/fill_pdf_fr/0"
       },
       {
         "selector": "td:nth-child(3)>a",
-        "value": "/html_acc_fr/1",
+        "value": "/fill_pdf_fr/1",
         "attr": "href"
-      }, 
+      },
       {
         "selector": "td:nth-child(4)>a",
-        "value": "/stnd_pdf_fr/0",
-        "isHTML": true
+        "value": "/stnd_pdf_fr/0"
       },
       {
         "selector": "td:nth-child(4)>a",
@@ -147,8 +140,7 @@
       },
       {
         "selector": "td:nth-child(5)>a",
-        "value": "/lrge_pdf_fr/0",
-        "isHTML": true
+        "value": "/lrge_pdf_fr/0"
       },
       {
         "selector": "td:nth-child(5)>a",
@@ -157,8 +149,7 @@
       },
       {
         "selector": "td:nth-child(6)>a",
-        "value": "/dwld_etx_fr/0",
-        "isHTML": true
+        "value": "/dwld_etx_fr/0"
       },
       {
         "selector": "td:nth-child(6)>a",
@@ -167,15 +158,15 @@
       }
     ]
    }
-    ' data-wb-tables=' { "ordering": false, "order": [ [0, "desc"] ], "paging": false, "retrieve": true }'>
+    ' data-wb-tables=' { "ordering": false, "order": [ [0, "desc"] ], "paging": false, "retrieve": true}'>
       <caption>
-      Formats disponibles pour les 10 dernières années (veuillez télécharger les fichiers .txt avant l'utilisation)
+      Formats disponibles pour les 9 années précédentes (veuillez télécharger les fichiers PDF à remplir et .txt avant l'utilisation)
       </caption>
       <thead>
         <tr>
-          <th scope="col">Année</th>
+          <th scope="col">Année<br></th>
           <th scope="col">Provinces ou territoires</th>
-          <th scope="col">HTML</th>
+          <th scope="col">PDF à remplir</th>
           <th scope="col">PDF standard</th>
           <th scope="col">PDF en gros caractères</th>
           <th scope="col">Texte électronique</th>
