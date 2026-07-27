@@ -87,7 +87,7 @@
   <!-- Render the personalized paragraph content, also it will only being display if valid info was provided -->
   <section data-wb-json='{ "url": "#[find-other-form]", "streamline": true, "template": "template", "mapping": [{ "selector": "[data-year]", "value": "/year" }, { "selector": "[data-region]", "value": "/region/0" }, { "selector": "[data-anchor]", "value": "/year", "placeholder": "[[years]]" }, { "selector": "[data-anchor]", "value": "/region/0", "placeholder": "[[regions]]" }, { "selector": "[data-anchor]", "value": "/year", "attr": "href", "placeholder": "--years--" }, { "selector": "[data-anchor]", "value": "/region/2", "attr": "href", "placeholder": "--regions--" }, { "rdfs:label": "Unhide if we do have a valid year value", "test": "fn:isLiteral", "assess": "/year", "mapping": { "selector": "[data-paragraph]", "attr": "class", "placeholder": "- hidden -", "value": "/emptystr" } }, { "rdfs:label": "Unhide if we do have a valid region value", "test": "fn:getValue", "assess": "/region/0", "operand": "neq", "expect": "", "mapping": { "selector": "[data-paragraph]", "attr": "class", "placeholder": "* hidden *", "value": "/emptystr" } } ] } '>
     <template>
-      <p data-paragraph="true" class="mrgn-tp-lg - hidden -* hidden *">To find other <strong><span data-year="true">year</span></strong> forms or guides you may need <strong><span data-region="true">region</span></strong>, return to the <a data-anchor="true" href="https://www.canada.ca/en/revenue-agency/services/forms-publications/tax-packages-years/archived-general-income-tax-benefit-package---years----regions--.html">[[years]] Income tax package [[regions]]</a>.</p>
+      <p data-paragraph class="mrgn-tp-lg - hidden -* hidden *">To find other <strong><span data-year>year</span></strong> forms or guides you may need <strong><span data-region>region</span></strong>, return to the <a data-anchor href="https://www.canada.ca/en/revenue-agency/services/forms-publications/tax-packages-years/archived-general-income-tax-benefit-package---years----regions--.html">[[years]] Income tax package [[regions]]</a>.</p>
     </template>
   </section>
 </section>
@@ -142,14 +142,14 @@
         }
     ]
 }' data-wb-tables=' { "ordering": false, "order": [[0, "desc"]], "paging": false, "retrieve": true }'>
-      <caption>Formats disponibles pour les 9 ann&#233;es pr&#233;c&#233;dentes (veuillez t&#233;l&#233;charger les fichiers PDF &#224; remplir et .txt avant l'utilisation)</caption>
+      <caption>Formats disponibles pour les 9 années précédentes (veuillez télécharger les fichiers PDF à remplir et .txt avant l'utilisation)</caption>
       <thead>
         <tr>
-          <th scope="col">Ann&#233;e</th>
-          <th scope="col">PDF &#224; remplir</th>
+          <th scope="col">Année</th>
+          <th scope="col">PDF à remplir</th>
           <th scope="col">PDF standard</th>
-          <th scope="col">PDF en gros caract&#232;res</th>
-          <th scope="col">Texte &#233;lectronique</th>
+          <th scope="col">PDF en gros caractères</th>
+          <th scope="col">Texte électronique</th>
         </tr>
       </thead>
       <tbody>
@@ -180,7 +180,7 @@
   <!-- Render the personalized paragraph content, also it will only being display if valid info was provided -->
   <section data-wb-json='{ "url": "#[find-other-form]", "streamline": true, "template": "template", "mapping": [{ "selector": "[data-year]", "value": "/year" }, { "selector": "[data-region]", "value": "/region/0" }, { "selector": "[data-anchor]", "value": "/year", "placeholder": "[[years]]" }, { "selector": "[data-anchor]", "value": "/region/0", "placeholder": "[[regions]]" }, { "selector": "[data-anchor]", "value": "/year", "attr": "href", "placeholder": "--years--" }, { "selector": "[data-anchor]", "value": "/region/2", "attr": "href", "placeholder": "--regions--" }, { "rdfs:label": "Unhide if we do have a valid year value", "test": "fn:isLiteral", "assess": "/year", "mapping": { "selector": "[data-paragraph]", "attr": "class", "placeholder": "- hidden -", "value": "/emptystr" } }, { "rdfs:label": "Unhide if we do have a valid region value", "test": "fn:getValue", "assess": "/region/0", "operand": "neq", "expect": "", "mapping": { "selector": "[data-paragraph]", "attr": "class", "placeholder": "* hidden *", "value": "/emptystr" } } ] } '>
     <template>
-      <p data-paragraph="true" class="- hidden -* hidden *">Pour trouver d&#8217;autres formulaires ou guides de l'ann&#233;e <strong><span data-year="true">ann&#233;e</span></strong> dont vous pourriez avoir besoin <strong><span data-region="true">r&#233;gion</span></strong>, retournez &#224; la <a data-anchor="true" href="https://www.canada.ca/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition/archivee-trousse-generale-impot-prestations---years----regions--.html">trousse d&#8217;imp&#244;t sur le revenu de [[years]] [[regions]]</a>.</p>
+      <p data-paragraph class="mrgn-tp-lg - hidden -* hidden *">Pour trouver d’autres formulaires ou guides de l'année <strong><span data-year>année</span></strong> dont vous pourriez avoir besoin <strong><span data-region>région</span></strong>, retournez à la <a data-anchor href=https://www.canada.ca/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition/archivee-trousse-generale-impot-prestations---years----regions--.html>trousse d’impôt sur le revenu de [[years]] [[regions]]</a>.</p>
     </template>
   </section>
 </section>
