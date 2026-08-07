@@ -57,6 +57,8 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 	  </section>
 	  <!--Description-->
 	  <p required="description" class="mrgn-bttm-md">((description))</p>
+	  <!--Part 2 of description-->
+	  <section data-ajax-replace="/content/dam/cra-arc/formspubs/include/pbg/((name)).txt#((name))-desc-pt2-fra"></section>
 	  <!--Ways to get the form-->
 		  <h2>Fa&#231;ons d'obtenir le formulaire</h2>
 		  <div required="((currentversion)) == true %% true">
