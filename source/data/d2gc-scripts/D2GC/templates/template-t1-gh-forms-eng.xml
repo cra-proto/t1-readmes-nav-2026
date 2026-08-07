@@ -33,7 +33,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 	<generic-text>
 	  <h1 id="wb-cont">((name)).ToUpper() ((title))</h1>
 	  <p class="small mrgn-tp-sm"><strong>You may be looking for: </strong> <a href="/content/canadasite/en/revenue-agency/services/forms-publications/tax-packages-years.html"><mark>All personal income tax packages</mark></a></p>
-	  <div class="clearfix" aria-hidden="true"></div>
+	  <div class="clearfix mrgn-bttm-lg" aria-hidden="true"></div>
 	  <!--Rescue link-->
 	  <section data-ajax-replace="/content/dam/cra-arc/formspubs/include/pbg/((name)).txt#((name))-rescue-eng"></section>
 	  <!--Alert space-->

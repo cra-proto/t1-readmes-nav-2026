@@ -33,7 +33,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 	<generic-text>
 	  <h1 id="wb-cont">((name)).ToUpper() ((title))</h1>
 	  <p class="small mrgn-tp-sm"><strong>Vous cherchez peut-&#234;tre : </strong> <a href="/content/canadasite/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition.html"><mark>Toutes les trousses  d&#8217;imp&#244;t pour les particuliers</mark></a></p>
-	  <div class="clearfix" aria-hidden="true"></div>
+	  <div class="clearfix mrgn-bttm-lg" aria-hidden="true"></div>
 	  <!--Rescue link-->
 	  <section data-ajax-replace="/content/dam/cra-arc/formspubs/include/pbg/((name)).txt#((name))-rescue-fra"></section>
 	  <!--Alert space-->
