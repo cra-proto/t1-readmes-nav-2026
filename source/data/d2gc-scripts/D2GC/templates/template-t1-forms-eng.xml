@@ -32,7 +32,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 	
 	<generic-text>
 	  <h1 id="wb-cont">((name)).ToUpper() ((title))</h1>
-	  <p class="small mrgn-tp-sm"><strong>You may be looking for: </strong> <a href="/content/canadasite/en/revenue-agency/services/forms-publications/tax-packages-years.html"><mark>All personal income tax packages</mark></a></p>
+	  <p class="small mrgn-tp-sm"><strong>You may be looking for: </strong> <a href="/content/canadasite/en/revenue-agency/services/forms-publications/tax-packages-years.html">All personal income tax packages</a></p>
      <div class="clearfix mrgn-bttm-lg" aria-hidden="true"></div>
 	  <!--Rescue link-->
 	  <section data-ajax-replace="/content/dam/cra-arc/formspubs/include/pbg/((name)).txt#((name))-rescue-eng"></section>
@@ -66,7 +66,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
         <p>Find out how to use the different formats:</p>
 	    <ul class="fa-ul">
 		  <li><span class="fas fa-file-download text-muted fa-lg fa-li"></span> <strong>Fillable PDF: </strong> <a class="wb-lbx"
-            href="#instructions">Download the fillable PDF and open <span class="nowrap">it<span
+            href="#instructions">Download the fillable PDF and <span class="nowrap">open it<span
             class="far fa-question-circle mrgn-lft-sm"></span></span></a> in Acrobat Reader 10 or higher to fill out.</li>
           <li><span class="fas fa-pencil-alt text-muted fa-lg fa-li"></span> <strong>Standard or large print PDF:</strong> Print the standard or large print PDF to fill out by hand.</li>
         <li><span class="fas fa-volume-up text-muted fa-lg fa-li"></span> <strong>E-text:</strong> Download and use your preferred screen reader to listen to the e-text file. </li>
@@ -87,15 +87,15 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		  <h3>Download and fill out using Acrobat Reader</h3>
 		  <p class="mrgn-bttm-md">To complete a fillable form, you <strong>must </strong> <a class="wb-lbx" href="#instructions">download the fillable PDF and open <span class="nowrap">it<span class="far fa-question-circle mrgn-lft-sm"></span></span></a> in Acrobat Reader 10 or higher.</p>
 		  <ul>
-			<li required="pdfFillable" split=";" sub=":" source="((pdfFillable))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))" download="((1))"><span class="wb-inv">Accessible</span> Fillable PDF (((1)))</a></li>
+			<li required="pdfFillable" split=";" sub=":" source="((pdfFillable))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))" download="((1))">20((revYear)) - <span class="wb-inv">Accessible</span> Fillable PDF</a></li>
 		  </ul>
 		</li>
 		<!--Flat-->
 		<li required="((pdf)) || ((largePrint))"><span class="fas fa-pencil-alt text-muted fa-lg fa-li"></span>
 		  <h3>Print and fill out by hand</h3>
 		  <ul>
-			<li required="pdf" split=";" sub=":" source="((pdf))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))">Standard print PDF (((1)))</a></li>
-			<li required="largePrint" split=";" sub=":" source="((largePrint))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))">Large print PDF (((1)))</a></li>
+			<li required="pdf" split=";" sub=":" source="((pdf))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))">20((revYear)) - Standard print PDF</a></li>
+			<li required="largePrint" split=";" sub=":" source="((largePrint))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))">20((revYear)) - Large print PDF</a></li>
 		  </ul>
 		</li>
 		<!--E-text-->
@@ -103,7 +103,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		  <h3>Download and listen</h3>
 		  <p>Use your preferred screen reader to listen to the e-text file.</p>
 		  <ul>
-			<li required="eText" split=";" sub=":" source="((eText))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))">E-text (((1)))</a></li>
+			<li required="eText" split=";" sub=":" source="((eText))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))">20((revYear)) - E-text (.txt)</a></li>
 		  </ul>
 		</li>
 		<!--Order Alt Format - when form is current-->
@@ -123,11 +123,9 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		  <section data-wb-jsonmanager='{
 			  "url": "/content/dam/cra-arc/formspubs/pbg-table-json/((name))-table-data.json#/data",
 			  "name": "forms"}'></section>
-	      <!-- 
-		  
-		    Add ajax here
-		  
-		  -->
+	  
+	      <!-- JSON manager for forms -->
+		  <section data-ajax-replace="/content/dam/cra-arc/formspubs/t1-includes/pbg-json-mngr-no-rgn-col.txt #table-en"></section>
 		</li>
 		<!--Order Alt Format - when form is **NOT** current-->
 		<li required="((currentversion)) == true %% true"><span class="fas fa-universal-access text-muted fa-lg fa-li"></span>
@@ -141,7 +139,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		</li>
 		<!-- Archive block -->
 		<li><span class="fas fa-archive text-muted fa-lg fa-li"></span>
-		  <section data-ajax-replace="/content/dam/cra-arc/formspubs/include/archived-lac.txt #lac-en"></section>
+		  <section data-ajax-replace="/content/dam/cra-arc/formspubs/t1-includes/archived-lac.txt #lac-en"></section>
 		</li>
 	  </ul>
 	  <!--Related documents-->

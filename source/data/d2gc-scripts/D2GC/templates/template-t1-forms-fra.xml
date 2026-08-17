@@ -32,7 +32,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 	
 	<generic-text>
 	  <h1 id="wb-cont">((name)).ToUpper() ((title))</h1>
-	  <p class="small mrgn-tp-sm"><strong>Vous cherchez peut-&#234;tre : </strong> <a href="/content/canadasite/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition.html"><mark>Toutes les trousses  d&#8217;imp&#244;t pour les particuliers</mark></a></p>
+	  <p class="small mrgn-tp-sm"><strong>Vous cherchez peut-&#234;tre : </strong> <a href="/content/canadasite/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition.html">Toutes les trousses  d&#8217;imp&#244;t pour les particuliers</a></p>
       <div class="clearfix mrgn-bttm-lg" aria-hidden="true"></div>
 	  <!--Rescue link-->
 	  <section data-ajax-replace="/content/dam/cra-arc/formspubs/include/pbg/((name)).txt#((name))-rescue-fra"></section>
@@ -85,17 +85,17 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		<!--Fillable-->
 		<li required="pdfFillable"><span class="fas fa-file-download text-muted fa-lg fa-li"></span>
 		  <h3>T&#233;l&#233;chargez le formulaire et <span class="nowrap">remplissez-le</span> &#224; l'aide d'Acrobat Reader</h3>
-		  <p class="mrgn-bttm-md">Pour remplir le formulaire, vous <strong>devez </strong><a class="wb-lbx" href="#instructions">t&#233;l&#233;charger et ouvrir le formulaire PDF &#224; <span class="nowrap">remplir<span class="far fa-question-circle mrgn-lft-sm"></span></span></a> dans Acrobat Reader 10 ou dans une version plus r&#233;cente.</p>
+		  <p class="mrgn-bttm-md">Pour remplir le formulaire, vous <strong>devez</strong> <a class="wb-lbx" href="#instructions">t&#233;l&#233;charger et ouvrir le formulaire <span class="nowrap">PDF &#224; remplir<span class="far fa-question-circle mrgn-lft-sm"></span></span></a> dans Acrobat Reader 10 ou dans une version plus r&#233;cente.</p>
 		  <ul>
-			<li required="pdfFillable" split=";" sub=":" source="((pdfFillable))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))" download="((1))">PDF &#224; remplir <span class="wb-inv">accessible</span> (((1)))</a></li>
+			<li required="pdfFillable" split=";" sub=":" source="((pdfFillable))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))" download="((1))">20((revYear)) - PDF &#224; remplir <span class="wb-inv">accessible</span></a></li>
 		  </ul>
 		</li>
 			<!--Flat-->
 		<li required="((pdf)) || ((largePrint))"><span class="fas fa-pencil-alt text-muted fa-lg fa-li"></span>
 		  <h3>Imprimez le formulaire et <span class="nowrap">remplissez-le</span> &#224; la main</h3>
 		  <ul>
-			<li required="pdf" split=";" sub=":" source="((pdf))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))">PDF en caract&#232;res standards (((1)))</a></li>
-			<li required="largePrint" split=";" sub=":" source="((largePrint))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))">PDF en gros caract&#232;res (((1)))</a></li>
+			<li required="pdf" split=";" sub=":" source="((pdf))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))">20((revYear)) - PDF standard</a></li>
+			<li required="largePrint" split=";" sub=":" source="((largePrint))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))">20((revYear)) - PDF en gros caract&#232;res</a></li>
 		  </ul>
 		</li>
 			<!--E-text-->
@@ -103,7 +103,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		  <h3>T&#233;l&#233;chargez le formulaire et &#233;coutez le texte</h3>
 		  <p>Utilisez le lecteur d'&#233;cran de votre choix pour &#233;couter le fichier texte &#233;lectronique.</p>
 		  <ul>
-			<li required="eText" split=";" sub=":" source="((eText))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))">Texte &#233;lectronique (((1)))</a></li>
+			<li required="eText" split=";" sub=":" source="((eText))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))">20((revYear)) - Texte &#233;lectronique (.txt)</a></li>
 		  </ul>
 		</li>
 			<!--Order Alt Format - when form is current-->
@@ -123,17 +123,15 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		  <section data-wb-jsonmanager='{
 			  "url": "/content/dam/cra-arc/formspubs/pbg-table-json/((name))-table-data.json#/data",
 			  "name": "forms"}'></section>
-          <!-- 
-		  
-		    Add ajax here
-		  
-		  -->
+	  
+	      <!-- JSON manager for forms -->
+		  <section data-ajax-replace="/content/dam/cra-arc/formspubs/t1-includes/pbg-json-mngr-no-rgn-col.txt #table-fr"></section>
 		</li>
 			<!--Order Alt Format - when form is **NOT** current-->
 			<li required="((currentversion)) == true %% true"><span class="fas fa-universal-access text-muted fa-lg fa-li"></span>
 		  <section data-ajax-replace="/content/dam/cra-arc/formspubs/include/altformat.txt#altformat-fra">
 			<h3>Demandez un format substitut</h3>
-			<p>Vous pouvez commander le formulaire en fichier audio num&#233;rique, en texte &#233;lectronique, en braille et en gros caract&#232;res afin qu'il vous soit envoyé par la poste :</p>
+			<p>Vous pouvez commander le formulaire en fichier audio num&#233;rique, en texte &#233;lectronique, en braille et en gros caract&#232;res afin qu'il vous soit envoyé par la poste$nbsp;:</p>
 			<ul>
 			  <li><a href="/content/canadasite/fr/agence-revenu/services/formulaires-publications/aide-formulaires-publications/a-propos-formats-alternatifs-substituts.html" class="nowrap">Commander des formats substituts pour les personnes en situation de handicap</a></li>
 			</ul>
@@ -141,7 +139,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		</li>
 		<!-- Archive block -->
 		<li><span class="fas fa-archive text-muted fa-lg fa-li"></span>
-		  <section data-ajax-replace="/content/dam/cra-arc/formspubs/include/archived-lac.txt #lac-fr"></section>
+		  <section data-ajax-replace="/content/dam/cra-arc/formspubs/t1-includes/archived-lac.txt #lac-fr"></section>
 		</li>
 	  </ul>
 	  <!--Related documents-->
