@@ -85,8 +85,8 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		<!--Fillable-->
 		<li required="((currentversion)) %% ((pdfFillable))"><span class="fas fa-file-download text-muted fa-lg fa-li"></span>
 		  <h3>T&#233;l&#233;chargez le formulaire et <span class="nowrap">remplissez-le</span> &#224; l'aide d'Acrobat Reader</h3>
-		  <p>Les formulaires ne peuvent <strong>pas</strong> être enregistrés s'ils sont remplis dans votre navigateur.</p>
-		  <p class="mrgn-bttm-md">Vous <strong>devez</strong> <a class="wb-lbx" href="#instructions">t&#233;l&#233;charger télécharger et ouvrir le formulaire <span class="nowrap">PDF &#224; remplir<span class="far fa-question-circle mrgn-lft-sm"></span></span></a> dans Acrobat Reader 10 ou dans une version plus r&#233;cente.</p>
+		  <p>Les formulaires ne peuvent <strong>pas</strong> &#234;tre enregistr&#233;s s'ils sont remplis dans votre navigateur.</p>
+		  <p class="mrgn-bttm-md">Vous <strong>devez </strong><a class="wb-lbx" href="#instructions">t&#233;l&#233;charger et ouvrir le formulaire <span class="nowrap">PDF &#224; remplir<span class="far fa-question-circle mrgn-lft-sm"></span></span></a> dans Acrobat Reader 10 ou dans une version plus r&#233;cente.</p>
 		  <ul>
 			<li required="pdfFillable" split=";" sub=":" source="((pdfFillable))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))" download="((1))">20((revYear)) - PDF &#224; remplir <span class="wb-inv">accessible</span></a></li>
 		  </ul>
