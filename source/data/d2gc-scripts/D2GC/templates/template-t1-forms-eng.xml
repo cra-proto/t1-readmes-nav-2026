@@ -85,7 +85,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		<!--Fillable-->
 		<li required="((currentversion)) %% ((pdfFillable))"><span class="fas fa-file-download text-muted fa-lg fa-li"></span>
 		  <h3>Download and fill out using Acrobat Reader</h3>
-		  <p>Forms can <strong>not</strong> be saved if completed in your browser.</p>
+		  <p>You <strong>cannot</strong> save a form completed online.</p>
           <p class="mrgn-bttm-md">You <strong>must </strong> <a class="wb-lbx" href="#instructions">download and open <span class="nowrap">fillable PDFs<span class="far fa-question-circle mrgn-lft-sm"></span></span></a> in Acrobat Reader 10 or higher.</p>
 		  <ul>
 			<li required="pdfFillable" split=";" sub=":" source="((pdfFillable))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))" download="((1))">20((revYear)) - <span class="wb-inv">Accessible</span> Fillable PDF</a></li>
