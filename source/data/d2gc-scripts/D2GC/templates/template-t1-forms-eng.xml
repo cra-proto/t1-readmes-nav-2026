@@ -72,9 +72,9 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
         <li><span class="fas fa-volume-up text-muted fa-lg fa-li"></span> <strong>E-text:</strong> Download and use your preferred screen reader to listen to the e-text file. </li>
 		</ul>
 	  </div>
-	  <ul class="fa-ul">
+      <ul class="fa-ul lst-stps">
 		<!--Online-->
-		<li required="html"><span class="fas fa-laptop text-muted fa-lg fa-li"></span>
+		<li required="((currentversion)) %% ((html))"><span class="fas fa-laptop text-muted fa-lg fa-li"></span>
 		  <section data-ajax-replace="/content/dam/cra-arc/formspubs/include/pbg/((name)).txt#((name))-online-eng">
 			<h3>Use the online form</h3>
 			<ul>
@@ -83,15 +83,16 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		  </section>
 		</li>
 		<!--Fillable-->
-		<li required="pdfFillable"><span class="fas fa-file-download text-muted fa-lg fa-li"></span>
+		<li required="((currentversion)) %% ((pdfFillable))"><span class="fas fa-file-download text-muted fa-lg fa-li"></span>
 		  <h3>Download and fill out using Acrobat Reader</h3>
-		  <p class="mrgn-bttm-md">To complete a fillable form, you <strong>must </strong> <a class="wb-lbx" href="#instructions">download the fillable PDF and open <span class="nowrap">it<span class="far fa-question-circle mrgn-lft-sm"></span></span></a> in Acrobat Reader 10 or higher.</p>
+		  <p>Forms can <strong>not</strong> be saved if completed in your browser.</p>
+          <p class="mrgn-bttm-md">You <strong>must</strong> <a class="wb-lbx" href="#instructions">download and open <span class="nowrap">fillable PDFs<span class="far fa-question-circle mrgn-lft-sm"></span></span></a> in Acrobat Reader 10 or higher.</p>
 		  <ul>
 			<li required="pdfFillable" split=";" sub=":" source="((pdfFillable))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))" download="((1))">20((revYear)) - <span class="wb-inv">Accessible</span> Fillable PDF</a></li>
 		  </ul>
 		</li>
 		<!--Flat-->
-		<li required="((pdf)) || ((largePrint))"><span class="fas fa-pencil-alt text-muted fa-lg fa-li"></span>
+		<li required="((currentversion)) %% ((pdf)) || ((currentversion)) %% ((largePrint))"><span class="fas fa-pencil-alt text-muted fa-lg fa-li"></span>
 		  <h3>Print and fill out by hand</h3>
 		  <ul>
 			<li required="pdf" split=";" sub=":" source="((pdf))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))">20((revYear)) - Standard print PDF</a></li>
@@ -99,7 +100,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		  </ul>
 		</li>
 		<!--E-text-->
-		<li required="eText"><span class="fas fa-volume-up text-muted fa-lg fa-li"></span>
+		<li required="((currentversion)) %% ((eText))"><span class="fas fa-volume-up text-muted fa-lg fa-li"></span>
 		  <h3>Download and listen</h3>
 		  <p>Use your preferred screen reader to listen to the e-text file.</p>
 		  <ul>
@@ -121,7 +122,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		  <h3 id="prvs-yrs">Get a version from the 9 previous years &#40;<span>((upname))</span>&#41;</h3>
           <p>Enter the <strong>year</strong> in the filter to find the <strong>correct</strong> form.</p>
 		  <section data-wb-jsonmanager='{
-			  "url": "/content/dam/cra-arc/formspubs/pbg-table-json/((name))-table-data.json#/data",
+			  "url": "/content/dam/cra-arc/formspubs/t1-includes/pbg-table-json/((name))-table-data.json#/data",
 			  "name": "forms"}'></section>
 	  
 	      <!-- JSON manager for forms -->

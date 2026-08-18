@@ -72,9 +72,9 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 	          <li><span class="fas fa-volume-up text-muted fa-lg fa-li"></span> <strong>Texte &#233;lectronique :</strong> T&#233;l&#233;chargez le fichier texte &#233;lectronique et utilisez le lecteur d'&#233;cran de votre choix pour l'&#233;couter. </li>
 			</ul>
 		  </div>
-	  <ul class="fa-ul">
+	  <ul class="fa-ul lst-stps">
 		<!--Online-->
-		<li required="html"><span class="fas fa-laptop text-muted fa-lg fa-li"></span>
+		<li required="((currentversion)) %% ((html))"><span class="fas fa-laptop text-muted fa-lg fa-li"></span>
 		  <section data-ajax-replace="/content/dam/cra-arc/formspubs/include/pbg/((name)).txt#((name))-online-fra">
 			<h3>Utilisez le formulaire en ligne</h3>
 			<ul>
@@ -83,15 +83,16 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		  </section>
 		</li>
 		<!--Fillable-->
-		<li required="pdfFillable"><span class="fas fa-file-download text-muted fa-lg fa-li"></span>
+		<li required="((currentversion)) %% ((pdfFillable))"><span class="fas fa-file-download text-muted fa-lg fa-li"></span>
 		  <h3>T&#233;l&#233;chargez le formulaire et <span class="nowrap">remplissez-le</span> &#224; l'aide d'Acrobat Reader</h3>
-		  <p class="mrgn-bttm-md">Pour remplir le formulaire, vous <strong>devez</strong> <a class="wb-lbx" href="#instructions">t&#233;l&#233;charger et ouvrir le formulaire <span class="nowrap">PDF &#224; remplir<span class="far fa-question-circle mrgn-lft-sm"></span></span></a> dans Acrobat Reader 10 ou dans une version plus r&#233;cente.</p>
+		  <p>Les formulaires ne peuvent <strong>pas</strong> être enregistrés s'ils sont remplis dans votre navigateur.</p>
+		  <p class="mrgn-bttm-md">Vous <strong>devez</strong> <a class="wb-lbx" href="#instructions">t&#233;l&#233;charger télécharger et ouvrir le formulaire <span class="nowrap">PDF &#224; remplir<span class="far fa-question-circle mrgn-lft-sm"></span></span></a> dans Acrobat Reader 10 ou dans une version plus r&#233;cente.</p>
 		  <ul>
 			<li required="pdfFillable" split=";" sub=":" source="((pdfFillable))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))" download="((1))">20((revYear)) - PDF &#224; remplir <span class="wb-inv">accessible</span></a></li>
 		  </ul>
 		</li>
 			<!--Flat-->
-		<li required="((pdf)) || ((largePrint))"><span class="fas fa-pencil-alt text-muted fa-lg fa-li"></span>
+		<li required="((currentversion)) %% ((pdf)) || ((currentversion)) %% ((largePrint))"><span class="fas fa-pencil-alt text-muted fa-lg fa-li"></span>
 		  <h3>Imprimez le formulaire et <span class="nowrap">remplissez-le</span> &#224; la main</h3>
 		  <ul>
 			<li required="pdf" split=";" sub=":" source="((pdf))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))">20((revYear)) - PDF standard</a></li>
@@ -99,7 +100,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		  </ul>
 		</li>
 			<!--E-text-->
-		<li required="eText"><span class="fas fa-volume-up text-muted fa-lg fa-li"></span>
+		<li required="((currentversion)) %% ((eText))"><span class="fas fa-volume-up text-muted fa-lg fa-li"></span>
 		  <h3>T&#233;l&#233;chargez le formulaire et &#233;coutez le texte</h3>
 		  <p>Utilisez le lecteur d'&#233;cran de votre choix pour &#233;couter le fichier texte &#233;lectronique.</p>
 		  <ul>
@@ -121,7 +122,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		  <h3 id="prvs-yrs">Obtenez une version des 9 ann&#233;es pr&#233;c&#233;dentes &#40;<span>((upname))</span>&#41;</h3>
           <p>Entrez l'<strong>ann&#233;e</strong> dans le filtre pour trouver le <strong>bon</strong> formulaire.</p>
 		  <section data-wb-jsonmanager='{
-			  "url": "/content/dam/cra-arc/formspubs/pbg-table-json/((name))-table-data.json#/data",
+			  "url": "/content/dam/cra-arc/formspubs/t1-includes/pbg-table-json/((name))-table-data.json#/data",
 			  "name": "forms"}'></section>
 	  
 	      <!-- JSON manager for forms -->
