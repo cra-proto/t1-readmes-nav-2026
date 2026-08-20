@@ -909,6 +909,30 @@ function Get-FullYearFromRevYear($revYear) {
     return $null
 }
 
+function Get-T1PackageYearFromCurrentDate {
+    $today = Get-Date
+    if ($today.Month -eq 1) {
+        return $today.Year - 1
+    }
+
+    return $today.Year
+}
+
+function Get-RecentPriorYearsAnchorYear($revYear) {
+    $year = Get-FullYearFromRevYear $revYear
+    if ($year) { return $year }
+
+    return Get-T1PackageYearFromCurrentDate
+}
+
+function Get-RecentPriorYearsFirstYear($revYear, $anchorYear) {
+    if (Get-FullYearFromRevYear $revYear) {
+        return $anchorYear - 9
+    }
+
+    return $anchorYear - 10
+}
+
 function Test-RecentPriorYears($priorYear, $revYear) {
     if (!$priorYear) { return $false }
 
@@ -918,11 +942,9 @@ function Test-RecentPriorYears($priorYear, $revYear) {
     # Preserve the old boolean-style data until the upstream XML sends year:file entries.
     if ($priorYearText -eq "true") { return $true }
 
-    $currentYear = Get-FullYearFromRevYear $revYear
-    if (!$currentYear) { return $false }
-
-    $firstPriorYear = $currentYear - 9
-    $lastPriorYear = $currentYear - 1
+    $anchorYear = Get-RecentPriorYearsAnchorYear $revYear
+    $firstPriorYear = Get-RecentPriorYearsFirstYear $revYear $anchorYear
+    $lastPriorYear = $anchorYear - 1
 
     foreach ($item in ($priorYearText -split ";")) {
         if ($item -match "^([0-9]{4}):") {
@@ -948,12 +970,9 @@ function Get-ReadmeRecentPriorYearsKey($name, $revYear) {
     $nameText = ([string]$name).Trim().ToLower()
     if ([string]::IsNullOrWhiteSpace($nameText)) { return $null }
 
-    $revYearText = ""
-    if ($revYear) {
-        $revYearText = ([string]$revYear).Trim()
-    }
+    $anchorYear = Get-RecentPriorYearsAnchorYear $revYear
 
-    return "$nameText|$revYearText"
+    return "$nameText|$anchorYear"
 }
 
 function Test-BilingualRecentPriorYears($trueLanguagesByKey, $key) {
