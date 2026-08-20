@@ -17,7 +17,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 	<header>
 		<title>((name)).ToUpper() ((title))</title>
 		<altTitle source="((Custom.Key))" remove="-e" add="-f" type="end">((name)).ToUpper() ((title))</altTitle>
-		<unique val="e@@true">((language))@@((pbg))</unique>
+		<unique val="e@@true@@true">((language))@@((pbg))@@((currentVersion))</unique>
 		<includes val="50*">((name))</includes>
 		<meta name="keywords">((keywords))</meta>
 		<meta name="description">((description))</meta>
@@ -61,7 +61,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 	  <section data-ajax-replace="/content/dam/cra-arc/formspubs/include/pbg/((name)).txt#((name))-desc-pt2-eng"></section>
 	  <!--Ways to get the form-->
 	  <h2>Ways to get the form</h2>
-	  <div required="((currentversion)) == true %% true">
+	  <div required="((revYear)) == true %% true">
 	    <p>This form <strong>is no longer current</strong>. Previous year versions are available.</p>
         <p>Find out how to use the different formats:</p>
 	    <ul class="fa-ul">
@@ -74,7 +74,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 	  </div>
       <ul class="fa-ul lst-stps">
 		<!--Online-->
-		<li required="((currentversion)) %% ((html))"><span class="fas fa-laptop text-muted fa-lg fa-li"></span>
+		<li required="((html))"><span class="fas fa-laptop text-muted fa-lg fa-li"></span>
 		  <section data-ajax-replace="/content/dam/cra-arc/formspubs/include/pbg/((name)).txt#((name))-online-eng">
 			<h3>Use the online form</h3>
 			<ul>
@@ -83,7 +83,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		  </section>
 		</li>
 		<!--Fillable-->
-		<li required="((currentversion)) %% ((pdfFillable))"><span class="fas fa-file-download text-muted fa-lg fa-li"></span>
+		<li required="((pdfFillable))"><span class="fas fa-file-download text-muted fa-lg fa-li"></span>
 		  <h3>Download and fill out using Acrobat Reader</h3>
 		  <p>You <strong>cannot</strong> save a form completed online.</p>
           <p class="mrgn-bttm-md">You <strong>must </strong> <a class="wb-lbx" href="#instructions">download and open <span class="nowrap">fillable PDFs<span class="far fa-question-circle mrgn-lft-sm"></span></span></a> in Acrobat Reader 10 or higher.</p>
@@ -92,7 +92,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		  </ul>
 		</li>
 		<!--Flat-->
-		<li required="((currentversion)) %% ((pdf)) || ((currentversion)) %% ((largePrint))"><span class="fas fa-pencil-alt text-muted fa-lg fa-li"></span>
+		<li required="((pdf)) || ((largePrint))"><span class="fas fa-pencil-alt text-muted fa-lg fa-li"></span>
 		  <h3>Print and fill out by hand</h3>
 		  <ul>
 			<li required="pdf" split=";" sub=":" source="((pdf))"><a href="/content/dam/cra-arc/formspubs/pbg/((name))/((1))">20((revYear)) - Standard print PDF</a></li>
@@ -100,7 +100,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		  </ul>
 		</li>
 		<!--E-text-->
-		<li required="((currentversion)) %% ((eText))"><span class="fas fa-volume-up text-muted fa-lg fa-li"></span>
+		<li required="((eText))"><span class="fas fa-volume-up text-muted fa-lg fa-li"></span>
 		  <h3>Download and listen</h3>
 		  <p>Use your preferred screen reader to listen to the e-text file.</p>
 		  <ul>
@@ -108,7 +108,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		  </ul>
 		</li>
 		<!--Order Alt Format - when form is current-->
-		<li required="((currentversion)) %% ((pdf)) || ((currentversion)) %% ((pdfFillable)) || ((currentversion)) %% ((largePrint)) || ((currentversion)) %% ((eText))"><span class="fas fa-universal-access text-muted fa-lg fa-li"></span>
+		<li required="((pdf)) || ((pdfFillable)) || ((largePrint)) || ((eText))"><span class="fas fa-universal-access text-muted fa-lg fa-li"></span>
 		  <section data-ajax-replace="/content/dam/cra-arc/formspubs/include/altformat.txt#altformat-eng">
 			<h3>Ask for an alternate format</h3>
 			<p>You can order digital audio, electronic text, braille or large print versions of forms and publications to be mailed to you:</p>
@@ -129,7 +129,7 @@ Created for t1-readmes-nav-2026 T1 form pages that only expose current-year link
 		  <section data-ajax-replace="/content/dam/cra-arc/formspubs/t1-includes/pbg-json-mngr-no-rgn-col.txt #table-en"></section>
 		</li>
 		<!--Order Alt Format - when form is **NOT** current-->
-		<li required="((currentversion)) == true %% true"><span class="fas fa-universal-access text-muted fa-lg fa-li"></span>
+		<li required="((revYear)) == true %% true"><span class="fas fa-universal-access text-muted fa-lg fa-li"></span>
 		  <section data-ajax-replace="/content/dam/cra-arc/formspubs/include/altformat.txt#altformat-eng">
 			<h3>Ask for an alternate format</h3>
             <p>You can order digital audio, electronic text, braille or large print versions of forms and publications to be mailed to you:</p>
