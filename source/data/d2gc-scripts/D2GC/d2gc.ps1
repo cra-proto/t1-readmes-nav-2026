@@ -744,7 +744,14 @@ function setWrapper ($array, $json) {
     $text = replaceSquareBrackets $text
     foreach ($attr in $array.attributes) {
         if ( $attr.Name -ne "required" -and $attr.Name -ne "split" -and $attr.Name -ne "source" -and $attr.Name -ne "sub" -and $attr.Name -ne "header" -and $attr.Name -ne "for" -and $attr.Name -ne "break" -and $attr.Name -ne "hash" -and $attr.Name -ne "sort" -and $attr.Name -ne "includes" -and $attr.Name -ne "exclude") {
-            $attrib += ($attr.Name) + "=""" + ($attr."#text") + """ "
+            $attrRaw = $attr."#text"
+            $attrText = [System.Net.WebUtility]::HtmlEncode($attrRaw)
+            if ($attrRaw -like '*"*' -and $attrRaw -notlike "*'*") {
+                $attrText = $attrText.Replace("&quot;", '"')
+                $attrib += ($attr.Name) + "='" + $attrText + "' "
+            } else {
+                $attrib += ($attr.Name) + "=""" + $attrText + """ "
+            }
         }
     }
 
@@ -883,6 +890,266 @@ function Get-ObjectMembers {
         $key = $_.Name
         [PSCustomObject]@{Key = $key; Value = $obj."$key"}
     }
+}
+
+function Get-FullYearFromRevYear($revYear) {
+    if (!$revYear) { return $null }
+
+    $yearText = [string]$revYear
+    if ($yearText -match '^[0-9]{4}$') {
+        return [int]$yearText
+    }
+
+    if ($yearText -match '^[0-9]{2}$') {
+        $year = [int]$yearText
+        if ($year -ge 80) { return 1900 + $year }
+        return 2000 + $year
+    }
+
+    return $null
+}
+
+function Get-RecentPriorYearsTaxYear($revYear) {
+    $revYearValue = Get-FullYearFromRevYear $revYear
+    if ($revYearValue) { return $revYearValue }
+
+    $today = Get-Date
+    if ($today.Month -eq 1) {
+        return $today.Year - 2
+    }
+
+    return $today.Year - 1
+}
+
+function Get-RecentPriorYearsItemKey($year, $fileName) {
+    if (!$year -or !$fileName) { return $null }
+
+    $fileNameText = ([string]$fileName).Trim().ToLower()
+    if ([string]::IsNullOrWhiteSpace($fileNameText)) { return $null }
+
+    $extension = [System.IO.Path]::GetExtension($fileNameText)
+    $fileBase = [System.IO.Path]::GetFileNameWithoutExtension($fileNameText)
+    $fileBase = $fileBase -replace '(?<=[0-9])(e|f)$', ''
+    if ([string]::IsNullOrWhiteSpace($fileBase)) { return $null }
+
+    return "$year`:$fileBase$extension"
+}
+
+function Get-RecentPriorYearsItemKeys($priorYear, $revYear) {
+    $itemKeys = @{}
+    if (!$priorYear) { return $itemKeys }
+
+    $priorYearText = [string]$priorYear
+    if ([string]::IsNullOrWhiteSpace($priorYearText)) { return $itemKeys }
+
+    # Preserve the old boolean-style data until the upstream XML sends year:file entries.
+    if ($priorYearText -eq "true") {
+        $itemKeys["__true__"] = $true
+        return $itemKeys
+    }
+
+    $taxYear = Get-RecentPriorYearsTaxYear $revYear
+    $firstPriorYear = $taxYear - 9
+    if (!(Get-FullYearFromRevYear $revYear)) {
+        $firstPriorYear = $taxYear - 10
+    }
+    $lastPriorYear = $taxYear - 1
+
+    foreach ($match in [regex]::Matches($priorYearText, '(^|;)([0-9]{4}):([^;]+)')) {
+        $year = [int]$match.Groups[2].Value
+        if ($year -ge $firstPriorYear -and $year -le $lastPriorYear) {
+            $itemKey = Get-RecentPriorYearsItemKey $match.Groups[2].Value $match.Groups[3].Value
+            if ($itemKey) {
+                $itemKeys[$itemKey] = $true
+            }
+        }
+    }
+
+    return $itemKeys
+}
+
+function Test-RecentPriorYears($priorYear, $revYear) {
+    $itemKeys = Get-RecentPriorYearsItemKeys $priorYear $revYear
+    return ($itemKeys.Count -gt 0)
+}
+
+function Get-ReadmeRecentPriorYearsKey($name, $revYear) {
+    if (!$name) { return $null }
+
+    $nameText = ([string]$name).Trim().ToLower()
+    if ([string]::IsNullOrWhiteSpace($nameText)) { return $null }
+
+    $taxYear = Get-RecentPriorYearsTaxYear $revYear
+
+    return "$nameText|$taxYear"
+}
+
+function Test-BilingualRecentPriorYears($languagesByKey, $key, $language, $priorYear, $revYear) {
+    if (!$key -or !$languagesByKey.ContainsKey($key)) { return $false }
+
+    $languageText = ([string]$language).Trim().ToLower()
+    if ($languageText -eq "e") {
+        $oppositeLanguage = "f"
+    } elseif ($languageText -eq "f") {
+        $oppositeLanguage = "e"
+    } else {
+        return $false
+    }
+
+    if (!$languagesByKey[$key].ContainsKey($oppositeLanguage)) { return $false }
+
+    $itemKeys = Get-RecentPriorYearsItemKeys $priorYear $revYear
+    foreach ($itemKey in $itemKeys.Keys) {
+        if ($languagesByKey[$key][$oppositeLanguage].ContainsKey($itemKey)) {
+            return $true
+        }
+    }
+
+    return $false
+}
+
+function Get-RecentPriorYearsLanguageMap($records) {
+    $languagesByKey = @{}
+
+    foreach ($record in $records) {
+        if (!(Test-RecentPriorYears $record.priorYear $record.revYear)) { continue }
+
+        $key = Get-ReadmeRecentPriorYearsKey $record.name $record.revYear
+        $language = ([string]$record.language).Trim().ToLower()
+        if (!$key -or !$language) { continue }
+
+        if (!$languagesByKey.ContainsKey($key)) {
+            $languagesByKey[$key] = @{}
+        }
+        if (!$languagesByKey[$key].ContainsKey($language)) {
+            $languagesByKey[$key][$language] = @{}
+        }
+
+        $itemKeys = Get-RecentPriorYearsItemKeys $record.priorYear $record.revYear
+        foreach ($itemKey in $itemKeys.Keys) {
+            $languagesByKey[$key][$language][$itemKey] = $true
+        }
+    }
+
+    return $languagesByKey
+}
+
+function Add-RecentPriorYearsRecords($obj, $records) {
+    if (!$obj -or $obj -is [string]) { return }
+
+    $properties = @($obj.PSObject.Properties.Name)
+    if ($properties -contains "priorYear") {
+        [void]$records.Add($obj)
+    }
+
+    foreach ($property in $obj.PSObject.Properties) {
+        if ($property.Value -is [PSCustomObject]) {
+            Add-RecentPriorYearsRecords $property.Value $records
+        } elseif ($property.Value -is [System.Object[]]) {
+            foreach ($item in $property.Value) {
+                Add-RecentPriorYearsRecords $item $records
+            }
+        }
+    }
+}
+
+function Get-RecentPriorYearsRecords($obj) {
+    $records = New-Object System.Collections.ArrayList
+    Add-RecentPriorYearsRecords $obj $records
+
+    return $records
+}
+
+function Set-RecentPriorYearsValue($record, $value) {
+    $properties = @($record.PSObject.Properties.Name)
+    if ($properties -contains "recentPriorYears") {
+        $record.recentPriorYears = $value
+    } else {
+        $record | Add-Member -MemberType NoteProperty -Name "recentPriorYears" -Value $value
+    }
+}
+
+function Add-RecentPriorYears($obj) {
+    $records = @(Get-RecentPriorYearsRecords $obj)
+    $languagesByKey = Get-RecentPriorYearsLanguageMap $records
+
+    foreach ($record in $records) {
+        $value = $null
+        $properties = @($record.PSObject.Properties.Name)
+        $isBilingualRecord = ($properties -contains "name") -and ($properties -contains "language")
+        $hasRecentPriorYear = Test-RecentPriorYears $record.priorYear $record.revYear
+
+        if ($hasRecentPriorYear -and $isBilingualRecord) {
+            $key = Get-ReadmeRecentPriorYearsKey $record.name $record.revYear
+            if (Test-BilingualRecentPriorYears $languagesByKey $key $record.language $record.priorYear $record.revYear) {
+                $value = "true"
+            }
+        } elseif ($hasRecentPriorYear) {
+            $value = "true"
+        }
+
+        Set-RecentPriorYearsValue $record $value
+    }
+}
+
+function Update-RecentPriorYearsInReadme($path) {
+    if (!(Test-Path $path)) { return }
+
+    $lines = Get-Content $path -Encoding UTF8
+    $records = @()
+    $currentLanguage = $null
+    $currentName = $null
+    $currentRevYear = $null
+
+    foreach ($line in $lines) {
+        if ($line -match "<language>(.*?)</language>") { $currentLanguage = $matches[1] }
+        if ($line -match "<name>(.*?)</name>") { $currentName = $matches[1] }
+        if ($line -match "<revYear>(.*?)</revYear>") { $currentRevYear = $matches[1] }
+        if ($line -match "^\s*<priorYear>(.*?)</priorYear>\s*$") {
+            $records += [PSCustomObject]@{
+                language = $currentLanguage
+                name = $currentName
+                revYear = $currentRevYear
+                priorYear = $matches[1]
+            }
+        }
+    }
+
+    $languagesByKey = Get-RecentPriorYearsLanguageMap $records
+    $updated = New-Object System.Collections.ArrayList
+    $currentLanguage = $null
+    $currentName = $null
+    $currentRevYear = $null
+
+    foreach ($line in $lines) {
+        if ($line -match "<language>(.*?)</language>") { $currentLanguage = $matches[1] }
+        if ($line -match "<name>(.*?)</name>") { $currentName = $matches[1] }
+        if ($line -match "<revYear>(.*?)</revYear>") { $currentRevYear = $matches[1] }
+
+        if ($line -match "^\s*<priorYear(>.*?</priorYear>|/>)\s*$") {
+            [void]$updated.Add($line)
+            $indent = [regex]::Match($line, "^\s*").Value
+            $priorYearValue = $null
+            if ($line -match "<priorYear>(.*?)</priorYear>") {
+                $priorYearValue = $matches[1]
+            }
+            $key = Get-ReadmeRecentPriorYearsKey $currentName $currentRevYear
+            if (Test-BilingualRecentPriorYears $languagesByKey $key $currentLanguage $priorYearValue $currentRevYear) {
+                [void]$updated.Add("$indent<recentPriorYears>true</recentPriorYears>")
+            } else {
+                [void]$updated.Add("$indent<recentPriorYears/>")
+            }
+            continue
+        }
+
+        if ($line -match "^\s*(<recentPriorYears>.*?</recentPriorYears>|<recentPriorYears/>)\s*$") {
+            continue
+        }
+
+        [void]$updated.Add($line)
+    }
+
+    Set-Content -Path $path -Value $updated -Encoding UTF8
 }
 
 function isJson($text, $json, $html, $bool) {
@@ -1461,6 +1728,10 @@ If(!($rm -match "<upname>")){$rm | ForEach-Object {$rmRegex.Replace($_, {$args[0
                                                                          $args[0].value.toUpper().Replace("NAME","upname")})} | Set-Content $rmPath -Encoding UTF8}
 Start-Sleep -s 1;
 
+# Add reviewable prior-year availability flag for the 9 previous years.
+Update-RecentPriorYearsInReadme $rmPath
+Start-Sleep -s 1;
+
 
 Write-Color -Text "D2GC (Data to Government of Canada)" -Color "White"
 Write-Host "-----------------------------------`r`n"
@@ -1585,9 +1856,11 @@ if ($xmlRoot.count -ne 0) {
                 $p = ConvertFrom-Xml -InputObject $x
                 $p = $p | ConvertTo-Json -Compress
                 $p = ParseJsonString $p
+                Add-RecentPriorYears $p
             }
             elseif ($ext -eq ".json") {
                 $p = ParseJsonFile $p
+                Add-RecentPriorYears $p
             }
             else {
                 Write-Warning "Please include a supported extension (.json or .xml) in the XML template data field"
@@ -1608,9 +1881,11 @@ if ($xmlRoot.count -ne 0) {
                 $pAlt = ConvertFrom-Xml -InputObject $xAlt
                 $pAlt = $pAlt | ConvertTo-Json -Compress
                 $pAlt = ParseJsonString $pAlt
+                Add-RecentPriorYears $pAlt
             }
             elseif ($extAlt -eq ".json") {
                 $pAlt = ParseJsonFile $pAlt
+                Add-RecentPriorYears $pAlt
             }
             else {
                 Write-Warning "Please include a supported extension (.json or .xml) in the Alternate Language XML template data field"
