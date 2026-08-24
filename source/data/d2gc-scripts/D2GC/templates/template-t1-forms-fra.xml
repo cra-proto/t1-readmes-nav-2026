@@ -68,7 +68,7 @@ For current French T1 forms
 	  <h2>Fa&#231;ons d'obtenir le formulaire</h2>
 	  <ul class="fa-ul lst-stps">
 		<!--Online-->
-		<li required="((html))"><span class="fas fa-laptop text-muted fa-lg fa-li"></span>
+		<li required="html"><span class="fas fa-laptop text-muted fa-lg fa-li"></span> 
 		  <section data-ajax-replace="/content/dam/cra-arc/formspubs/include/pbg/((name)).txt#((name))-online-fra">
 			<h3>Utilisez le formulaire en ligne</h3>
 			<ul>
@@ -77,7 +77,7 @@ For current French T1 forms
 		  </section>
 		</li>
 		<!--Fillable-->
-		<li required="((pdfFillable))"><span class="fas fa-file-download text-muted fa-lg fa-li"></span>
+		<li required="pdfFillable"><span class="fas fa-file-download text-muted fa-lg fa-li"></span>
 		  <h3>T&#233;l&#233;chargez le formulaire et <span class="nowrap">remplissez-le</span> &#224; l'aide d'Acrobat Reader</h3>
 		  <p>Vous <strong>ne pouvez pas</strong> enregistrer un formulaire rempli en ligne.</p>
 		  <p class="mrgn-bttm-md">Vous <strong>devez </strong><a class="wb-lbx" href="#instructions">t&#233;l&#233;charger et ouvrir le formulaire <span class="nowrap">PDF &#224; remplir<span class="far fa-question-circle mrgn-lft-sm"></span></span></a> dans Acrobat Reader 10 ou dans une version plus r&#233;cente.</p>
@@ -94,7 +94,7 @@ For current French T1 forms
 		  </ul>
 		</li>
 			<!--E-text-->
-		<li required="((eText))"><span class="fas fa-volume-up text-muted fa-lg fa-li"></span>
+		<li required="eText"><span class="fas fa-volume-up text-muted fa-lg fa-li"></span>
 		  <h3>T&#233;l&#233;chargez le formulaire et &#233;coutez le texte</h3>
 		  <p>Utilisez le lecteur d'&#233;cran de votre choix pour &#233;couter le fichier texte &#233;lectronique.</p>
 		  <ul>

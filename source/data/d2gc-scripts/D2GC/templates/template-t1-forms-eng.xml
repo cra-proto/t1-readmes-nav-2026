@@ -67,17 +67,17 @@ For current English T1 forms
 	  <!--Ways to get the form-->
 	  <h2>Ways to get the form</h2>
       <ul class="fa-ul lst-stps">
-		<!--Online-->
-		<li required="((html))"><span class="fas fa-laptop text-muted fa-lg fa-li"></span>
-		  <section data-ajax-replace="/content/dam/cra-arc/formspubs/include/pbg/((name)).txt#((name))-online-eng">
-			<h3>Use the online form</h3>
-			<ul>
-			  <li required="html" split=";" sub="::" source="((html))"><a href="((2))">((1)) (web version)</a></li>
-			</ul>
-		  </section>
-		</li>
+		<!--Online--> 
+		<li required="html"><span class="fas fa-laptop text-muted fa-lg fa-li"></span> 
+			<section data-ajax-replace="/content/dam/cra-arc/formspubs/include/pbg/((name)).txt#((name))-online-eng"> 
+		<h3>Use the online form</h3> 
+		<ul> 
+		<li required="html" split=";" sub="::" source="((html))"><a href="((2))">((1)) (web version)</a></li> 
+		</ul> 
+			</section> 
+		</li> 
 		<!--Fillable-->
-		<li required="((pdfFillable))"><span class="fas fa-file-download text-muted fa-lg fa-li"></span>
+		<li required="pdfFillable"><span class="fas fa-file-download text-muted fa-lg fa-li"></span>
 		  <h3>Download and fill out using Acrobat Reader</h3>
 		  <p>You <strong>cannot</strong> save a form completed online.</p>
           <p class="mrgn-bttm-md">You <strong>must </strong> <a class="wb-lbx" href="#instructions">download and open <span class="nowrap">fillable PDFs<span class="far fa-question-circle mrgn-lft-sm"></span></span></a> in Acrobat Reader 10 or higher.</p>
