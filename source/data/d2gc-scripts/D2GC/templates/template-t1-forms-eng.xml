@@ -18,7 +18,7 @@ For current English T1 forms
 	<header>
 		<title>((name)).ToUpper() ((title))</title>
 		<altTitle source="((Custom.Key))" remove="-e" add="-f" type="end">((name)).ToUpper() ((title))</altTitle>
-		<unique val="e@@true@@true">((language))@@((pbg))@@((currentVersion))</unique>
+		<unique val="e@@true@@true">((language))@@((pbg))@@((currentversion))</unique>
 		<includes val="50*">((name))</includes>
 		<meta name="keywords">((keywords))</meta>
 		<meta name="description">((description))</meta>
