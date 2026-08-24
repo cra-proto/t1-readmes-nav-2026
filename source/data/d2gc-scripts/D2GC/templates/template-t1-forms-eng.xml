@@ -94,7 +94,7 @@ For current English T1 forms
 		  </ul>
 		</li>
 		<!--E-text-->
-		<li required="((eText))"><span class="fas fa-volume-up text-muted fa-lg fa-li"></span>
+		<li required="eText"><span class="fas fa-volume-up text-muted fa-lg fa-li"></span>
 		  <h3>Download and listen</h3>
 		  <p>Use your preferred screen reader to listen to the e-text file.</p>
 		  <ul>
