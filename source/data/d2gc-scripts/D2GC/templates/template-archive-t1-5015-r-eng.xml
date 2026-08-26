@@ -19,8 +19,7 @@ For non-current English T1 forms
 		<title>((name)).ToUpper() ARCHIVED &#8212; ((title))</title>
 		<altTitle source="((Custom.Key))" remove="-e" add="-f" type="end">((name)).ToUpper() ((title))</altTitle>
 		<unique val="e@@true@@true@@">((language))@@((pbg))@@((recentPriorYears))@@((revYear))</unique>
-		<includes val="50*">((name))</includes>
-		<excludes val="5015-r">((name))</excludes>
+		<includes val="5015-r">((name))</includes>
 		<meta name="keywords">((keywords))</meta>
 		<meta name="description">((description))</meta>
 		<meta name="subject">((subject))</meta>
@@ -80,10 +79,10 @@ For non-current English T1 forms
 		  <h3 id="prvs-yrs">Get a version from the 9 previous years &#40;<span>((upname))</span>&#41;</h3>
           <p>Enter the <strong>year</strong> in the filter to find the <strong>correct</strong> form.</p>
 		  <section data-wb-jsonmanager='{
-			  "url": "/content/dam/cra-arc/formspubs/t1-includes/pbg-table-json/((name))-table-data.json#/data",
+			  "url": "/content/dam/cra-arc/formspubs/t1-includes/pbg-table-json/((name))-table-data-with-regions.json#/data",
 			  "name": "forms"}'></section>
 	      <!-- JSON manager for forms -->
-		  <section data-ajax-replace="/content/dam/cra-arc/formspubs/t1-includes/pbg-json-mngr-no-rgn-col.txt #table-en"></section>
+		  <section data-ajax-replace="/content/dam/cra-arc/formspubs/t1-includes/pbg-json-mngr-with-rgn-col.txt #table-en"></section>
 		</li>
 		<!--Order Alt Format - when form is **NOT** current-->
 		<li><span class="fas fa-universal-access text-muted fa-lg fa-li"></span>

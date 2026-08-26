@@ -20,6 +20,7 @@ For non-current French T1 forms
 		<altTitle source="((Custom.Key))" remove="-f" add="-e" type="end">((name)).ToUpper() ((title))</altTitle>
 		<unique val="f@@true@@true@@">((language))@@((pbg))@@((recentPriorYears))@@((revYear))</unique>
 		<includes val="50*">((name))</includes>
+		<excludes val="5015-r">((name))</excludes>
 		<meta name="keywords">((keywords))</meta>
 		<meta name="description">((description))</meta>
 		<meta name="subject">((subject))</meta>
