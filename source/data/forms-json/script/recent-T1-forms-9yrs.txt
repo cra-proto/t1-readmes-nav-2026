@@ -6,8 +6,8 @@
 # - Clean up old comments
 
 # -- fake, for testing --
-# 5000-x (Table row data is not applicable for ALL years in the range: 2016-2024)
-# 5016-s2 (Table row data is not applicable for ALL years in the range: 2016-2024)
+5000-x
+5016-s2
 # ----
 
 5000-d1

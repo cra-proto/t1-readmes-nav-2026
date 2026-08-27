@@ -30,7 +30,7 @@ param(
   [int]$RetryCount = 2,
   [int]$RetryDelayMs = 500,
   [int]$MaxRedirects = 8,
-  [string]$AnnualUploadLogPath = ".\AU-log.txt",
+  [string]$AnnualUploadLogPath = ".\AU-logs\AU-log.txt",
   [string]$AnnualUploadLogTemplatePath = ".\AU-log-template.txt",
   [switch]$NoPauseAtEnd,
   [switch]$GenerateOnly,
@@ -557,6 +557,7 @@ function Write-AnnualUploadLog {
     [Parameter(Mandatory)] [string]$Path,
     [Parameter(Mandatory)] [object[]]$EmptyTables,
     [Parameter(Mandatory)] [string]$TemplateText,
+    [Parameter(Mandatory)] [datetime]$GeneratedAt,
     [Parameter(Mandatory)] [System.Text.Encoding]$Encoding,
     [switch]$DryRun
   )
@@ -565,7 +566,7 @@ function Write-AnnualUploadLog {
   $yearRangeText = if ($yearRanges.Count -eq 1) { $yearRanges[0] } else { $yearRanges -join ', ' }
   $formListText = (@($EmptyTables | ForEach-Object { "- $($_.Form)" }) -join [Environment]::NewLine)
   $text = $TemplateText.
-    Replace('{{GENERATED_AT}}', (Get-Date).ToString('yyyy-MM-dd HH:mm:ss')).
+    Replace('{{GENERATED_AT}}', $GeneratedAt.ToString('yyyy-MM-dd HH:mm:ss')).
     Replace('{{YEAR_RANGE}}', $yearRangeText).
     Replace('{{FORM_LIST}}', $formListText)
 
@@ -585,6 +586,28 @@ function Write-AnnualUploadLog {
   }
 
   return $text
+}
+
+function Get-TimestampedLogPath {
+  param(
+    [Parameter(Mandatory)] [string]$Path,
+    [Parameter(Mandatory)] [datetime]$Timestamp
+  )
+
+  $directory = Split-Path -Parent $Path
+  $fileNameWithoutExtension = [System.IO.Path]::GetFileNameWithoutExtension($Path)
+  $extension = [System.IO.Path]::GetExtension($Path)
+  if ([string]::IsNullOrWhiteSpace($extension)) {
+    $extension = '.txt'
+  }
+
+  $timestampText = $Timestamp.ToString('yyyyMMdd-HHmmss')
+  $timestampedFileName = "$fileNameWithoutExtension-$timestampText$extension"
+  if ([string]::IsNullOrWhiteSpace($directory)) {
+    return $timestampedFileName
+  }
+
+  return (Join-Path $directory $timestampedFileName)
 }
 
 function Get-AnnualUploadConsoleReport {
@@ -857,18 +880,11 @@ foreach ($form in $formsForGeneration) {
     Write-Host "$form => modified $changedPairs pair(s)."
   }
 
-  $postCheckJsonText = Normalize-NaArrayLiterals -JsonText $outJsonFinal
-  try {
-    $postCheckJsonObj = $postCheckJsonText | ConvertFrom-Json
-  } catch {
-    throw "Invalid post-validation JSON for $form. $($_.Exception.Message)"
-  }
-
-  if (Test-AllRowsNotApplicable -JsonObject $postCheckJsonObj) {
+  if (Test-AllRowsNotApplicable -JsonObject $jsonObj) {
     $emptyTables.Add([pscustomobject]@{
       Form      = $form
       Path      = $outPath
-      YearRange = Get-TableYearRange -JsonObject $postCheckJsonObj
+      YearRange = Get-TableYearRange -JsonObject $jsonObj
     }) | Out-Null
   }
 
@@ -879,7 +895,9 @@ Write-Host "Done. Validated $validatedTotal JSON file(s)." -ForegroundColor Gree
 
 if ($emptyTables.Count -gt 0) {
   Write-Host "Found $($emptyTables.Count) empty table(s). Creating annual upload log and removing empty outputs..." -ForegroundColor Yellow
-  $annualUploadReportText = Write-AnnualUploadLog -Path $AnnualUploadLogPath -EmptyTables $emptyTables.ToArray() -TemplateText $annualUploadLogTemplateText -Encoding $templateFile.Encoding -DryRun:$DryRun
+  $annualUploadReportGeneratedAt = Get-Date
+  $annualUploadLogPathForRun = Get-TimestampedLogPath -Path $AnnualUploadLogPath -Timestamp $annualUploadReportGeneratedAt
+  $annualUploadReportText = Write-AnnualUploadLog -Path $annualUploadLogPathForRun -EmptyTables $emptyTables.ToArray() -TemplateText $annualUploadLogTemplateText -GeneratedAt $annualUploadReportGeneratedAt -Encoding $templateFile.Encoding -DryRun:$DryRun
 
   foreach ($emptyTable in $emptyTables) {
     if ($DryRun) {
@@ -898,7 +916,7 @@ if ($emptyTables.Count -gt 0) {
     Write-Host "Commented out $disabledCount form(s) in '$FormsListPath'." -ForegroundColor Yellow
   }
 
-  $annualUploadLogFileName = Split-Path -Leaf $AnnualUploadLogPath
+  $annualUploadLogFileName = Split-Path -Leaf $annualUploadLogPathForRun
   if ($DryRun) {
     Write-Host "[DRY RUN] Annual upload report would be written to $annualUploadLogFileName" -ForegroundColor Yellow
   } else {
