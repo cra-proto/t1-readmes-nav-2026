@@ -1,0 +1,12 @@
+Annual upload log
+Generated: {{GENERATED_AT}}
+
+The following readmes must be unpublished
+(table row data is not applicable for ALL years in the range: {{YEAR_RANGE}}):
+
+{{FORM_LIST}}
+
+Instructions to follow for each form listed:
+1 - Uncheck current version in the EDDS File browser XML tab
+2 - Unpublish the form's readme
+3 - Unpublish or remove the form's assets

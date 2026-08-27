@@ -30,6 +30,9 @@ param(
   [int]$RetryCount = 2,
   [int]$RetryDelayMs = 500,
   [int]$MaxRedirects = 8,
+  [string]$AnnualUploadLogPath = ".\AU-log.txt",
+  [string]$AnnualUploadLogTemplatePath = ".\AU-log-template.txt",
+  [switch]$NoPauseAtEnd,
   [switch]$GenerateOnly,
   [switch]$PauseBeforeLinkCheck,
   [switch]$DryRun
@@ -80,6 +83,35 @@ function Resolve-DirectoryPath {
   }
 
   return (Join-Path $BaseDir $PathValue)
+}
+
+function Test-RunWithPowerShellFromExplorer {
+  try {
+    if ($Host.Name -ne 'ConsoleHost') {
+      return $false
+    }
+
+    $currentProcess = Get-CimInstance Win32_Process -Filter "ProcessId = $PID"
+    if ($null -eq $currentProcess -or $null -eq $currentProcess.ParentProcessId) {
+      return $false
+    }
+
+    $parentProcess = Get-Process -Id $currentProcess.ParentProcessId -ErrorAction SilentlyContinue
+    return ($null -ne $parentProcess -and $parentProcess.ProcessName -eq 'explorer')
+  } catch {
+    return $false
+  }
+}
+
+function Wait-AtEndIfNeeded {
+  if ($NoPauseAtEnd) {
+    return
+  }
+
+  if (Test-RunWithPowerShellFromExplorer) {
+    Write-Host ""
+    Read-Host "Press Enter to close"
+  }
 }
 
 # Read form codes, trim whitespace, and optionally skip commented lines.
@@ -464,6 +496,151 @@ function Normalize-NaArrayLiterals {
   return $out
 }
 
+function Test-AllRowsNotApplicable {
+  param([Parameter(Mandatory)] [psobject]$JsonObject)
+
+  if ($null -eq $JsonObject.data -or $JsonObject.data.Count -eq 0) {
+    return $false
+  }
+
+  foreach ($row in $JsonObject.data) {
+    $bases = Get-RowPairBases -Row $row
+    if ($bases.Count -eq 0) {
+      return $false
+    }
+
+    foreach ($base in $bases) {
+      $enKey = "${base}_en"
+      $frKey = "${base}_fr"
+      if (-not ($row.PSObject.Properties.Name -contains $enKey)) { return $false }
+      if (-not ($row.PSObject.Properties.Name -contains $frKey)) { return $false }
+
+      $enIsNap = Is-NotApplicablePair -Value $row.$enKey -Lang 'en'
+      $frIsNap = Is-NotApplicablePair -Value $row.$frKey -Lang 'fr'
+      if (-not ($enIsNap -and $frIsNap)) {
+        return $false
+      }
+    }
+  }
+
+  return $true
+}
+
+function Get-TableYearRange {
+  param([Parameter(Mandatory)] [psobject]$JsonObject)
+
+  if ($null -eq $JsonObject.data) {
+    return $null
+  }
+
+  $years = @($JsonObject.data |
+    ForEach-Object { [string]$_.year } |
+    Where-Object { $_ -match '^\d{4}$' } |
+    ForEach-Object { [int]$_ } |
+    Sort-Object -Unique)
+
+  if ($years.Count -eq 0) {
+    return $null
+  }
+
+  $firstYear = $years[0]
+  $lastYear = $years[$years.Count - 1]
+  if ($firstYear -eq $lastYear) {
+    return [string]$firstYear
+  }
+
+  return "$firstYear-$lastYear"
+}
+
+function Write-AnnualUploadLog {
+  param(
+    [Parameter(Mandatory)] [string]$Path,
+    [Parameter(Mandatory)] [object[]]$EmptyTables,
+    [Parameter(Mandatory)] [string]$TemplateText,
+    [Parameter(Mandatory)] [System.Text.Encoding]$Encoding,
+    [switch]$DryRun
+  )
+
+  $yearRanges = @($EmptyTables | ForEach-Object { $_.YearRange } | Sort-Object -Unique)
+  $yearRangeText = if ($yearRanges.Count -eq 1) { $yearRanges[0] } else { $yearRanges -join ', ' }
+  $formListText = (@($EmptyTables | ForEach-Object { "- $($_.Form)" }) -join [Environment]::NewLine)
+  $text = $TemplateText.
+    Replace('{{GENERATED_AT}}', (Get-Date).ToString('yyyy-MM-dd HH:mm:ss')).
+    Replace('{{YEAR_RANGE}}', $yearRangeText).
+    Replace('{{FORM_LIST}}', $formListText)
+
+  if ($DryRun) {
+    Write-Host "[DRY RUN] Would write annual upload log to $Path"
+    return $text
+  }
+
+  try {
+    $logDir = Split-Path -Parent $Path
+    if (-not [string]::IsNullOrWhiteSpace($logDir)) {
+      [System.IO.Directory]::CreateDirectory($logDir) | Out-Null
+    }
+    [System.IO.File]::WriteAllText($Path, $text, $Encoding)
+  } catch {
+    throw "Failed to write annual upload log '$Path'. $($_.Exception.Message)"
+  }
+
+  return $text
+}
+
+function Get-AnnualUploadConsoleReport {
+  param([Parameter(Mandatory)] [string]$ReportText)
+
+  return ([regex]::Replace($ReportText, '^\s*Annual upload log\r?\nGenerated:[^\r\n]*(?:\r\n|\n|\r){2}', '')).TrimEnd()
+}
+
+function Disable-EmptyFormsInList {
+  param(
+    [Parameter(Mandatory)] [string]$Path,
+    [Parameter(Mandatory)] [object[]]$EmptyTables,
+    [switch]$DryRun
+  )
+
+  $emptyTableByForm = @{}
+  foreach ($emptyTable in $EmptyTables) {
+    $emptyTableByForm[$emptyTable.Form] = $emptyTable
+  }
+
+  $formsListFile = Read-TextFilePreserveEncoding -Path $Path
+  $newlineMatch = [regex]::Match($formsListFile.Text, '\r\n|\n|\r')
+  $newline = if ($newlineMatch.Success) { $newlineMatch.Value } else { [Environment]::NewLine }
+  $lines = [regex]::Split($formsListFile.Text, '\r\n|\n|\r')
+  $changed = $false
+
+  for ($i = 0; $i -lt $lines.Count; $i++) {
+    $trimmed = $lines[$i].Trim()
+    $formCode = $trimmed
+    $commentedMatch = [regex]::Match($trimmed, '^#\s*(?<form>\d{4}-.+?)(?:\s+\(.*\))?$')
+    if ($commentedMatch.Success) {
+      $formCode = $commentedMatch.Groups['form'].Value
+    }
+
+    if ($emptyTableByForm.ContainsKey($formCode)) {
+      $leadingWhitespace = [regex]::Match($lines[$i], '^\s*').Value
+      $yearRange = $emptyTableByForm[$formCode].YearRange
+      $lines[$i] = "$leadingWhitespace# $formCode (Table row data is not applicable for ALL years in the range: $yearRange)"
+      $changed = $true
+    }
+  }
+
+  if (-not $changed) {
+    return 0
+  }
+
+  if ($DryRun) {
+    Write-Host "[DRY RUN] Would comment out $($emptyTableByForm.Count) form(s) in $Path"
+    return $emptyTableByForm.Count
+  }
+
+  $updatedText = ($lines -join $newline)
+  Write-TextFileWithEncoding -Path $Path -Text $updatedText -Encoding $formsListFile.Encoding -TrailingNewlines $formsListFile.TrailingNewlines
+  return $emptyTableByForm.Count
+}
+
 $EN_NA = @('Not available')
 $FR_NA = @('Pas disponible')
 $EN_NAP = @('Not applicable')
@@ -471,6 +648,8 @@ $FR_NAP = @('Pas applicable')
 
 $FormsListPath = Resolve-ExistingPath -PathValue $FormsListPath -BaseDir $scriptRoot
 $TemplatePath = Resolve-ExistingPath -PathValue $TemplatePath -BaseDir $scriptRoot
+$AnnualUploadLogTemplatePath = Resolve-ExistingPath -PathValue $AnnualUploadLogTemplatePath -BaseDir $scriptRoot
+$AnnualUploadLogPath = Resolve-DirectoryPath -PathValue $AnnualUploadLogPath -BaseDir $scriptRoot
 
 # Default output folder: sibling "tables" directory next to script folder.
 if (-not $PSBoundParameters.ContainsKey('OutputDir') -or [string]::IsNullOrWhiteSpace($OutputDir)) {
@@ -487,6 +666,7 @@ if (-not $formsForGeneration) {
 
 $templateFile = Read-TextFilePreserveEncoding -Path $TemplatePath
 $templateText = $templateFile.Text
+$annualUploadLogTemplateText = (Read-TextFilePreserveEncoding -Path $AnnualUploadLogTemplatePath).Text
 
 $generatedTotal = 0
 Write-Host "Step 1/2: Generating JSON files from template..." -ForegroundColor Cyan
@@ -521,6 +701,7 @@ Write-Host "Done. Generated $generatedTotal JSON file(s) in '$OutputDir'." -Fore
 
 if ($GenerateOnly) {
   Write-Host "Generate-only mode enabled. Skipping link validation." -ForegroundColor Yellow
+  Wait-AtEndIfNeeded
   return
 }
 
@@ -528,12 +709,14 @@ if ($PauseBeforeLinkCheck -and -not $DryRun) {
   $answer = (Read-Host "Files generated. Validate links now? [Y/N]").Trim().ToLowerInvariant()
   if ($answer -notin @('y', 'yes')) {
     Write-Host "Skipped link validation by user choice." -ForegroundColor Yellow
+    Wait-AtEndIfNeeded
     return
   }
 }
 
 Write-Host "Step 2/2: Validating bilingual links..." -ForegroundColor Cyan
 $validatedTotal = 0
+$emptyTables = New-Object System.Collections.Generic.List[object]
 
 foreach ($form in $formsForGeneration) {
   if ($form -notmatch '^\d{4}-.+$') {
@@ -673,7 +856,57 @@ foreach ($form in $formsForGeneration) {
     Write-TextFileWithEncoding -Path $outPath -Text $outJsonFinal -Encoding $sourceEncoding -TrailingNewlines $sourceTrailingNewlines
     Write-Host "$form => modified $changedPairs pair(s)."
   }
+
+  $postCheckJsonText = Normalize-NaArrayLiterals -JsonText $outJsonFinal
+  try {
+    $postCheckJsonObj = $postCheckJsonText | ConvertFrom-Json
+  } catch {
+    throw "Invalid post-validation JSON for $form. $($_.Exception.Message)"
+  }
+
+  if (Test-AllRowsNotApplicable -JsonObject $postCheckJsonObj) {
+    $emptyTables.Add([pscustomobject]@{
+      Form      = $form
+      Path      = $outPath
+      YearRange = Get-TableYearRange -JsonObject $postCheckJsonObj
+    }) | Out-Null
+  }
+
   $validatedTotal++
 }
 
 Write-Host "Done. Validated $validatedTotal JSON file(s)." -ForegroundColor Green
+
+if ($emptyTables.Count -gt 0) {
+  Write-Host "Found $($emptyTables.Count) empty table(s). Creating annual upload log and removing empty outputs..." -ForegroundColor Yellow
+  $annualUploadReportText = Write-AnnualUploadLog -Path $AnnualUploadLogPath -EmptyTables $emptyTables.ToArray() -TemplateText $annualUploadLogTemplateText -Encoding $templateFile.Encoding -DryRun:$DryRun
+
+  foreach ($emptyTable in $emptyTables) {
+    if ($DryRun) {
+      Write-Host "[DRY RUN] Would delete $($emptyTable.Path)"
+      continue
+    }
+
+    if (Test-Path -LiteralPath $emptyTable.Path) {
+      Remove-Item -LiteralPath $emptyTable.Path -Force
+      Write-Host "$($emptyTable.Form) => deleted empty table file."
+    }
+  }
+
+  $disabledCount = Disable-EmptyFormsInList -Path $FormsListPath -EmptyTables $emptyTables.ToArray() -DryRun:$DryRun
+  if (-not $DryRun) {
+    Write-Host "Commented out $disabledCount form(s) in '$FormsListPath'." -ForegroundColor Yellow
+  }
+
+  $annualUploadLogFileName = Split-Path -Leaf $AnnualUploadLogPath
+  if ($DryRun) {
+    Write-Host "[DRY RUN] Annual upload report would be written to $annualUploadLogFileName" -ForegroundColor Yellow
+  } else {
+    Write-Host "Annual upload report written to $annualUploadLogFileName" -ForegroundColor Yellow
+  }
+  Write-Host (Get-AnnualUploadConsoleReport -ReportText $annualUploadReportText)
+} else {
+  Write-Host "No empty tables found." -ForegroundColor Green
+}
+
+Wait-AtEndIfNeeded

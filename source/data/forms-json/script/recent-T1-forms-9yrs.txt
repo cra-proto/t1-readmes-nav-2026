@@ -1,122 +1,14 @@
+# In this file you can : 
+# - Update this list for Annual Upload each year, or 
+# - Trim it to only a few for corrections, or
+# - Add new forms for the current year
+# - Comments information for other developers (with #)
+# - Clean up old comments
+
+# -- fake, for testing --
+# 5000-x (Table row data is not applicable for ALL years in the range: 2016-2024)
+# 5016-s2 (Table row data is not applicable for ALL years in the range: 2016-2024)
+# ----
+
 5000-d1
 5000-d2
-# 5000-r (Skipped – manually update JSON table data with regions every year)
-5000-s1
-5000-s2
-5000-s3
-5000-s4
-5000-s5
-5000-s6
-5000-s7
-5000-s8
-5000-s9
-5000-s11
-5000-s12
-5000-s13
-5000-s14
-5000-s15
-5001-c
-5001-d
-5001-r
-5001-s2
-5001-s11
-5001-tc
-5002-c
-5002-d
-5002-r
-5002-s2
-5002-s11
-5003-c
-5003-d
-5003-s2
-5003-s11
-5003-tc
-5004-c
-5004-d
-5004-r
-5004-s2
-5004-s11
-5004-s12
-5004-s14
-5005-d1
-5005-d2
-5005-r
-5005-s1
-5005-s2
-5005-s6
-5005-s8
-5005-s10
-5005-s11
-5005-s13
-5006-a
-5006-c
-5006-d
-5006-d1
-5006-r
-5006-s2
-5006-s11
-5006-s12
-5006-s14
-5006-tc
-5006-tca
-5006-tg
-5007-a
-5007-c
-5007-d
-5007-s2
-5007-s11
-5007-s14
-5007-tc
-5008-c
-5008-d
-5008-s2
-5008-s11
-5008-s12
-5008-s14
-5008-tc
-5009-c
-5009-d
-# 5009-r (Renewed for 2025 – No prior years within 10 years, include next year)
-5009-s2
-5009-s6
-5009-s11
-5009-s14
-5010-c
-5010-d
-5010-r
-5010-s2
-5010-s6
-5010-s11
-5010-s12
-5010-tc
-5011-c
-5011-c1
-5011-d
-5011-r
-5011-s2
-5011-s11
-5011-tc
-5011-s14
-5012-c
-5012-d
-5012-r
-5012-s2
-5012-s11
-5012-tc
-5013-d1
-5013-d2
-5013-r
-5013-s1
-5013-s5
-5013-s8
-5013-sa
-5013-sb
-5013-sc
-5014-c
-5014-d
-5014-r
-5014-s2
-5014-s6
-5014-s11
-5014-tc
-# 5015-r (Skipped – manually update JSON table data with regions every year)
