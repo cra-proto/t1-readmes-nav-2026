@@ -130,7 +130,7 @@
     <pbg>true</pbg>
     <noChildPages/>
     <availableInPrint/>
-    <currentversion>true</currentversion>
+    <currentversion>false</currentversion>
   </R5015-r-e>
   <R5000-r-f>
     <language>f</language>
@@ -262,6 +262,6 @@
     <pbg>true</pbg>
     <noChildPages/>
     <availableInPrint/>
-    <currentversion>true</currentversion>
+    <currentversion>false</currentversion>
   </R5015-r-f>
 </edds>
