@@ -18,7 +18,7 @@ For current English T1 forms
 	<header>
 		<title>((name)).ToUpper() ((title))</title>
 		<altTitle source="((Custom.Key))" remove="-e" add="-f" type="end">((name)).ToUpper() ((title))</altTitle>
-		<unique val="e@@true@@true">((language))@@((pbg))@@((revYear))</unique>
+		<unique val="e@@true@@true">((language))@@((pbg))@@((currentversion))</unique>
 		<includes val="5000-r">((name))</includes>
 		<meta name="keywords">((keywords))</meta>
 		<meta name="description">((description))</meta>
@@ -113,7 +113,7 @@ For current English T1 forms
 		</li>
 		<!-- Previous year versions section -->
 		<li required="recentPriorYears"><span class="fas fa-history text-muted fa-lg fa-li"></span>
-		  <h3 id="prvs-yrs">Get a version from the 9 previous years &#40;<span>((upname))</span>&#41;</h3>
+		  <h3 id="prvs-yrs">Get a version from the 9 previous years <span class="small">&#40;<span>((upname))</span>&#41;</span></h3>
           <p>Enter the <strong>year</strong> in the filter to find the <strong>correct</strong> form.</p>
 		  <section data-wb-jsonmanager='{
 			  "url": "/content/dam/cra-arc/formspubs/t1-includes/pbg-table-json/((name))-table-data-with-regions.json#/data",

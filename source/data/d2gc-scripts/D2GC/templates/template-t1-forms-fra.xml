@@ -18,7 +18,7 @@ For current French T1 forms
 	<header>
 		<title>((name)).ToUpper() ((title))</title>
 		<altTitle source="((Custom.Key))" remove="-f" add="-e" type="end">((name)).ToUpper() ((title))</altTitle>
-		<unique val="f@@true@@true">((language))@@((pbg))@@((revYear))</unique>
+		<unique val="f@@true@@true">((language))@@((pbg))@@((currentversion))</unique>
 		<includes val="50*">((name))</includes>
 		<excludes val="5000-r">((name))</excludes> 
 		<meta name="keywords">((keywords))</meta>
@@ -114,7 +114,7 @@ For current French T1 forms
 		</li>
 		<!-- Previous year versions section -->
 		<li required="recentPriorYears"><span class="fas fa-history text-muted fa-lg fa-li"></span>
-		  <h3 id="prvs-yrs">Obtenez une version des 9 ann&#233;es pr&#233;c&#233;dentes &#40;<span>((upname))</span>&#41;</h3>
+		  <h3 id="prvs-yrs">Obtenez une version pour l'une des 9 ann&#233;es pr&#233;c&#233;dentes <span class="small">&#40;<span>((upname))</span>&#41;</span></h3>
           <p>Entrez l'<strong>ann&#233;e</strong> dans le filtre pour trouver le <strong>bon</strong> formulaire.</p>
 		  <section data-wb-jsonmanager='{
 			  "url": "/content/dam/cra-arc/formspubs/t1-includes/pbg-table-json/((name))-table-data.json#/data",

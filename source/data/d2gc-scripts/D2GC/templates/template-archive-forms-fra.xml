@@ -20,7 +20,7 @@ Modified date: August 1, 2023
 		<title>((name)).ToUpper() ARCHIV&#201;E &#8212; ((title))</title>
 		<altTitle source="((Custom.Key))" remove="-f" add="-e" type="end">((name)).ToUpper() ARCHIVED &#8212; ((title))</altTitle>
 		<unique val="f@@true@@true@@">((language))@@((pbg))@@((priorYear))@@((currentVersion))</unique>
-		<excludes val="t2203">((name))@@((name))@@((name))</excludes> 
+		<excludes val="50*@@t2203">((name))@@((name))@@((name))</excludes> 
 		<meta name="keywords">((keywords))</meta>
 		<meta name="description">((description))</meta>
 		<meta name="subject">((subject))</meta>
