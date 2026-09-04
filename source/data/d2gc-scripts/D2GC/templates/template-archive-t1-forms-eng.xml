@@ -7,7 +7,7 @@ For non-current English T1 forms
 <html   lang="eng"
 		data="((Custom.Dir))\db\data-readme.xml"
 		loc="((Custom.Dir))\data\jcr_root\content\canadasite\en\revenue-agency\services\forms-publications\forms\"
-		title="((name)).ToUpper() ((title))"
+		title="((name)).ToUpper() ARCHIVED &#8212; ((title))"
 		fileName="((name))"
 		mode="replace"
 		replaceChildrenAEM="false"

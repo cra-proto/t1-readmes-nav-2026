@@ -7,7 +7,7 @@ For non-current French T1 forms
 <html   lang="fra"
 		data="((Custom.Dir))\db\data-readme.xml"
 		loc="((Custom.Dir))\data\jcr_root\content\canadasite\fr\agence-revenu\services\formulaires-publications\formulaires\"
-		title="((name)).ToUpper() ((title))"
+		title="((name)).ToUpper() ARCHIV&#201;E &#8212; ((title))"
 		fileName="((name))"
 		mode="replace"
 		replaceChildrenAEM="false"
