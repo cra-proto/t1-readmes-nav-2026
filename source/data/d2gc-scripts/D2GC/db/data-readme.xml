@@ -1310,7 +1310,7 @@
     <pbg>true</pbg>
     <noChildPages/>
     <availableInPrint/>
-    <currentversion>true</currentversion>
+    <currentversion/>
   </R5005-d1-e>
   <R5005-d2-e>
     <language>e</language>
@@ -5246,7 +5246,7 @@
     <pbg>true</pbg>
     <noChildPages/>
     <availableInPrint/>
-    <currentversion>true</currentversion>
+    <currentversion/>
   </R5005-d1-f>
   <R5005-d2-f>
     <language>f</language>
