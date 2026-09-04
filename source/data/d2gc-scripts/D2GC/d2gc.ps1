@@ -927,12 +927,33 @@ function Get-RecentPriorYearsItemKey($year, $fileName) {
     $fileNameText = ([string]$fileName).Trim().ToLower()
     if ([string]::IsNullOrWhiteSpace($fileNameText)) { return $null }
 
-    $extension = [System.IO.Path]::GetExtension($fileNameText)
-    $fileBase = [System.IO.Path]::GetFileNameWithoutExtension($fileNameText)
-    $fileBase = $fileBase -replace '(?<=[0-9])(e|f)$', ''
-    if ([string]::IsNullOrWhiteSpace($fileBase)) { return $null }
+    $fileType = Get-RecentPriorYearsFileType $fileNameText
+    if (!$fileType) { return $null }
 
-    return "$year`:$fileBase$extension"
+    return "$year`:$fileType"
+}
+
+function Get-RecentPriorYearsFileType($fileName) {
+    if (!$fileName) { return $null }
+
+    $fileNameText = ([string]$fileName).Trim().ToLower()
+    if ([string]::IsNullOrWhiteSpace($fileNameText)) { return $null }
+
+    $extension = [System.IO.Path]::GetExtension($fileNameText)
+    if ($extension -eq ".txt") { return "eText" }
+    if ($extension -eq ".brf") { return "braille" }
+
+    if ($extension -eq ".pdf") {
+        if ($fileNameText -match '(^|-)fill($|-)' -or $fileNameText -match '(^|-)fill-s($|-)') {
+            return "fillablePdf"
+        }
+        if ($fileNameText -match '(^|-)lp($|-)') {
+            return "largePrintPdf"
+        }
+        return "standardPdf"
+    }
+
+    return $null
 }
 
 function Get-RecentPriorYearsItemKeys($priorYear, $revYear) {
