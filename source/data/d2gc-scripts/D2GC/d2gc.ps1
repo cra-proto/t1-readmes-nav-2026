@@ -1,4 +1,4 @@
-﻿<######
+<######
 # Created by : Adam Monsour
 # Link : https://gccode.ssc-spc.gc.ca/service-canada/d2gc/
 # Changelog : https://gccode.ssc-spc.gc.ca/service-canada/d2gc/blob/master/CHANGELOG.md
@@ -1580,7 +1580,7 @@ function main ($jsonRaw, $xml, $xmlChildren, $jsonRawFull, $xmlChildrenFr, $json
         $f = $f.Replace($dftAlt, $gcAltLanguagePeer)
         $f = $f.Replace($dftLang, $langAEM)
         $f = $f.Replace($dftLangToggle, $langAEMToggle)
-        $f = $f.Replace($dftOverride, $override)
+        $f = $f.Replace($dftOverride, $override.ToString().ToLower())
         $f = $f.Replace($dftModifiedDate, $gcDate)
         $f = $f.Replace($dftModOverrideDate, $gcOverDate)
         #$f = $f.Replace($dftbranch, $contributor) 
