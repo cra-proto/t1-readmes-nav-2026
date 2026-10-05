@@ -1,29 +1,42 @@
 {
   "data": [{
+      "year": "2025",
+      "regions_en": "<span class=\"wb-inv\">Manitoba, </span>MB, <span class=\"wb-inv\">New Brunswick, </span>NB, <span class=\"wb-inv\">Nova Scotia, </span>NS, <span class=\"wb-inv\">Prince Edward Island, </span>PE, <span class=\"wb-inv\">Saskatchewan, </span>SK",
+      "regions_fr": "<span class=\"wb-inv\">Manitoba, </span>MB, <span class=\"wb-inv\">Nouveau-Brunswick, </span>NB, <span class=\"wb-inv\">Nouvelle-Écosse, </span> <span class=\"wb-inv\" aria-hidden=\"true\">Ecosse, </span>NS, <span class=\"wb-inv\">Île-du-Prince-Édouard, </span> <span class=\"wb-inv\" aria-hidden=\"true\">Ile Edouard, </span>PE, <span class=\"wb-inv\">Saskatchewan, </span>SK",
+      "fill_pdf_en": ["2025 - Fillable PDF", "/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-fill-25e.pdf"],
+      "fill_pdf_fr": ["2025 - PDF à remplir", "/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-fill-25f.pdf"],
+      "stnd_pdf_en": ["2025 - Standard PDF", "/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-25e.pdf"],
+      "stnd_pdf_fr": ["2025 - PDF standard", "/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-25f.pdf"],
+      "lrge_pdf_en": ["2025 - Large print PDF", "/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-lp-25e.pdf"],
+      "lrge_pdf_fr": ["2025 - PDF en gros caractères", "/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-lp-25f.pdf"],
+      "dwld_etx_en": ["2025 - E-text file", "/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-25e.txt"],
+      "dwld_etx_fr": ["2025 - Fichier .txt", "/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-25f.txt"]
+    },
+    {
       "year": "2024",
       "regions_en": "<span class=\"small\">Not applicable</span>",
-      "regions_fr": "<span class=\"small\">Sans objet</span>",
+      "regions_fr": "<span class=\"small\">Pas applicable</span>",
       "fill_pdf_en": ["Not applicable"],
-      "fill_pdf_fr": ["Sans objet"],
+      "fill_pdf_fr": ["Pas applicable"],
       "stnd_pdf_en": ["Not applicable"],
-      "stnd_pdf_fr": ["Sans objet"],
+      "stnd_pdf_fr": ["Pas applicable"],
       "lrge_pdf_en": ["Not applicable"],
-      "lrge_pdf_fr": ["Sans objet"],
+      "lrge_pdf_fr": ["Pas applicable"],
       "dwld_etx_en": ["Not applicable"],
-      "dwld_etx_fr": ["Sans objet"]
+      "dwld_etx_fr": ["Pas applicable"]
     },
     {
       "year": "2023",
       "regions_en": "<span class=\"small\">Not applicable</span>",
-      "regions_fr": "<span class=\"small\">Sans objet</span>",
+      "regions_fr": "<span class=\"small\">Pas applicable</span>",
       "fill_pdf_en": ["Not applicable"],
-      "fill_pdf_fr": ["Sans objet"],
+      "fill_pdf_fr": ["Pas applicable"],
       "stnd_pdf_en": ["Not applicable"],
-      "stnd_pdf_fr": ["Sans objet"],
+      "stnd_pdf_fr": ["Pas applicable"],
       "lrge_pdf_en": ["Not applicable"],
-      "lrge_pdf_fr": ["Sans objet"],
+      "lrge_pdf_fr": ["Pas applicable"],
       "dwld_etx_en": ["Not applicable"],
-      "dwld_etx_fr": ["Sans objet"]
+      "dwld_etx_fr": ["Pas applicable"]
     },
     {
       "year": "2022",
@@ -102,19 +115,6 @@
       "lrge_pdf_fr": ["2017 - PDF en gros caractères", "/content/dam/cra-arc/formspubs/pbg/5000-r/5100-r-lp-17f.pdf"],
       "dwld_etx_en": ["2017 - E-text file", "/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-17e.txt"],
       "dwld_etx_fr": ["2017 - Fichier .txt", "/content/dam/cra-arc/formspubs/pbg/5000-r/5100-r-17f.txt"]
-    },
-    {
-      "year": "2016",
-      "regions_en": "<span class=\"wb-inv\">Alberta, </span>AB, <span class=\"wb-inv\">Manitoba, </span>MB, <span class=\"wb-inv\">New Brunswick, </span>NB, <span class=\"wb-inv\">Nova Scotia, </span>NS, <span class=\"wb-inv\">Nunavut, </span>NU, <span class=\"wb-inv\">Prince Edward Island, </span>PE, <span class=\"wb-inv\">Saskatchewan, </span>SK",
-      "regions_fr": "<span class=\"wb-inv\">Alberta, </span>AB, <span class=\"wb-inv\">Manitoba, </span>MB, <span class=\"wb-inv\">Nouveau-Brunswick, </span>NB, <span class=\"wb-inv\">Nouvelle-Écosse, </span> <span class=\"wb-inv\" aria-hidden=\"true\">Ecosse, </span>NS, <span class=\"wb-inv\">Nunavut, </span>NU, <span class=\"wb-inv\">Île-du-Prince-Édouard, </span> <span class=\"wb-inv\" aria-hidden=\"true\">Ile Edouard, </span>PE, <span class=\"wb-inv\">Saskatchewan, </span>SK",
-      "fill_pdf_en": ["2016 - Fillable PDF", "/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-fill-16e.pdf"],
-      "fill_pdf_fr": ["2016 - PDF à remplir", "/content/dam/cra-arc/formspubs/pbg/5000-r/5100-r-fill-16f.pdf"],
-      "stnd_pdf_en": ["2016 - Standard PDF", "/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-16e.pdf"],
-      "stnd_pdf_fr": ["2016 - PDF standard", "/content/dam/cra-arc/formspubs/pbg/5000-r/5100-r-16f.pdf"],
-      "lrge_pdf_en": ["2016 - Large print PDF", "/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-lp-16e.pdf"],
-      "lrge_pdf_fr": ["2016 - PDF en gros caractères", "/content/dam/cra-arc/formspubs/pbg/5000-r/5100-r-lp-16f.pdf"],
-      "dwld_etx_en": ["2016 - E-text file", "/content/dam/cra-arc/formspubs/pbg/5000-r/5000-r-16e.txt"],
-      "dwld_etx_fr": ["2016 - Fichier .txt", "/content/dam/cra-arc/formspubs/pbg/5000-r/5100-r-16f.txt"]
     }
   ]
 }

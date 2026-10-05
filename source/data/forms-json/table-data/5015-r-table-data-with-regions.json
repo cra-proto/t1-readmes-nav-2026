@@ -1,5 +1,18 @@
 {
   "data": [{
+      "year": "2025",
+      "regions_en": "<span class=\"small\">Not applicable</span>",
+      "regions_fr": "<span class=\"small\">Pas applicable</span>",
+      "fill_pdf_en": ["Not applicable"],
+      "fill_pdf_fr": ["Pas applicable"],
+      "stnd_pdf_en": ["Not applicable"],
+      "stnd_pdf_fr": ["Pas applicable"],
+      "lrge_pdf_en": ["Not applicable"],
+      "lrge_pdf_fr": ["Pas applicable"],
+      "dwld_etx_en": ["Not applicable"],
+      "dwld_etx_fr": ["Pas applicable"]
+    },
+    {
       "year": "2024",
       "regions_en": "<span class=\"wb-inv\">Alberta, </span>AB, <span class=\"wb-inv\">New Brunswick, </span>NB, <span class=\"wb-inv\">Nova Scotia, </span>NS, <span class=\"wb-inv\">Manitoba, </span>MB, <span class=\"wb-inv\">Saskatchewan, </span>SK",
       "regions_fr": "<span class=\"wb-inv\">Alberta, </span>AB, <span class=\"wb-inv\">Manitoba, </span>MB, <span class=\"wb-inv\">Nouveau-Brunswick, </span>NB, <span class=\"wb-inv\">Nouvelle-Écosse, </span> <span class=\"wb-inv\" aria-hidden=\"true\">Ecosse, </span>NS, <span class=\"wb-inv\">Saskatchewan, </span>SK",
@@ -41,15 +54,15 @@
     {
       "year": "2021",
       "regions_en": "<span class=\"small\">Not applicable</span>",
-      "regions_fr": "<span class=\"small\">Sans objet</span>",
+      "regions_fr": "<span class=\"small\">Pas applicable</span>",
       "fill_pdf_en": ["Not applicable"],
-      "fill_pdf_fr": ["Sans objet"],
+      "fill_pdf_fr": ["Pas applicable"],
       "stnd_pdf_en": ["Not applicable"],
-      "stnd_pdf_fr": ["Sans objet"],
+      "stnd_pdf_fr": ["Pas applicable"],
       "lrge_pdf_en": ["Not applicable"],
-      "lrge_pdf_fr": ["Sans objet"],
+      "lrge_pdf_fr": ["Pas applicable"],
       "dwld_etx_en": ["Not applicable"],
-      "dwld_etx_fr": ["Sans objet"]
+      "dwld_etx_fr": ["Pas applicable"]
     },
     {
       "year": "2020",
@@ -93,28 +106,15 @@
     {
       "year": "2017",
       "regions_en": "<span class=\"small\">Not applicable</span>",
-      "regions_fr": "<span class=\"small\">Sans objet</span>",
+      "regions_fr": "<span class=\"small\">Pas applicable</span>",
       "fill_pdf_en": ["Not applicable"],
-      "fill_pdf_fr": ["Sans objet"],
+      "fill_pdf_fr": ["Pas applicable"],
       "stnd_pdf_en": ["Not applicable"],
-      "stnd_pdf_fr": ["Sans objet"],
+      "stnd_pdf_fr": ["Pas applicable"],
       "lrge_pdf_en": ["Not applicable"],
-      "lrge_pdf_fr": ["Sans objet"],
+      "lrge_pdf_fr": ["Pas applicable"],
       "dwld_etx_en": ["Not applicable"],
-      "dwld_etx_fr": ["Sans objet"]
-    },
-    {
-      "year": "2016",
-      "regions_en": "<span class=\"small\">Not applicable</span>",
-      "regions_fr": "<span class=\"small\">Sans objet</span>",
-      "fill_pdf_en": ["Not applicable"],
-      "fill_pdf_fr": ["Sans objet"],
-      "stnd_pdf_en": ["Not applicable"],
-      "stnd_pdf_fr": ["Sans objet"],
-      "lrge_pdf_en": ["Not applicable"],
-      "lrge_pdf_fr": ["Sans objet"],
-      "dwld_etx_en": ["Not applicable"],
-      "dwld_etx_fr": ["Sans objet"]
+      "dwld_etx_fr": ["Pas applicable"]
     }
   ]
 }

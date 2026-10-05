@@ -226,6 +226,13 @@ function Test-Url200 {
     [int]$MaxRedirects = 8
   )
 
+  # Table data uses root-relative Canada.ca links so the generated JSON stays
+  # portable. Resolve those links only for HTTP requests.
+  $requestUrl = $Url
+  if ($requestUrl.StartsWith('/')) {
+    $requestUrl = "https://www.canada.ca$requestUrl"
+  }
+
   function Get-HttpStatusFromError {
     param([Parameter(Mandatory)] $ErrorRecord)
     try {
@@ -274,7 +281,7 @@ function Test-Url200 {
       }
 
       try {
-        $response = Invoke-WebRequest -Uri $AttemptUrl -Method $Method -TimeoutSec $AttemptTimeoutSec -MaximumRedirection $AttemptMaxRedirects -ErrorAction Stop
+        $response = Invoke-WebRequest -Uri $AttemptUrl -Method $Method -TimeoutSec $AttemptTimeoutSec -MaximumRedirection $AttemptMaxRedirects -UseBasicParsing -ErrorAction Stop
         $statusCode = [int]$response.StatusCode
         $finalUrl = Get-FinalResponseUri -Response $response
         return [pscustomobject]@{
@@ -317,10 +324,10 @@ function Test-Url200 {
     }
   }
 
-  $headResult = Invoke-UrlAttempt -AttemptUrl $Url -Method Head -AttemptTimeoutSec $TimeoutSec -AttemptRequestDelayMs $RequestDelayMs -AttemptRetryCount $RetryCount -AttemptRetryDelayMs $RetryDelayMs -AttemptMaxRedirects $MaxRedirects
+  $headResult = Invoke-UrlAttempt -AttemptUrl $requestUrl -Method Head -AttemptTimeoutSec $TimeoutSec -AttemptRequestDelayMs $RequestDelayMs -AttemptRetryCount $RetryCount -AttemptRetryDelayMs $RetryDelayMs -AttemptMaxRedirects $MaxRedirects
   if ($headResult.Success -and -not $headResult.Redirected) { return $true }
 
-  $getResult = Invoke-UrlAttempt -AttemptUrl $Url -Method Get -AttemptTimeoutSec $TimeoutSec -AttemptRequestDelayMs $RequestDelayMs -AttemptRetryCount $RetryCount -AttemptRetryDelayMs $RetryDelayMs -AttemptMaxRedirects $MaxRedirects
+  $getResult = Invoke-UrlAttempt -AttemptUrl $requestUrl -Method Get -AttemptTimeoutSec $TimeoutSec -AttemptRequestDelayMs $RequestDelayMs -AttemptRetryCount $RetryCount -AttemptRetryDelayMs $RetryDelayMs -AttemptMaxRedirects $MaxRedirects
   if ($getResult.Success) { return $true }
 
   return $false

@@ -1,5 +1,16 @@
 {
   "data": [{
+      "year": "2025",
+      "fill_pdf_en": ["2025 - Fillable PDF", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5004-s12-fill-25e.pdf"],
+      "fill_pdf_fr": ["2025 - PDF à remplir", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5004-s12-fill-25f.pdf"],
+      "stnd_pdf_en": ["2025 - Standard PDF", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5004-s12-25e.pdf"],
+      "stnd_pdf_fr": ["2025 - PDF standard", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5004-s12-25f.pdf"],
+      "lrge_pdf_en": ["2025 - Large print PDF", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5004-s12-lp-25e.pdf"],
+      "lrge_pdf_fr": ["2025 - PDF en gros caractères", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5004-s12-lp-25f.pdf"],
+      "dwld_etx_en": ["2025 - E-text file", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5004-s12-25e.txt"],
+      "dwld_etx_fr": ["2025 - Fichier .txt", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5004-s12-25f.txt"]
+    },
+    {
       "year": "2024",
       "fill_pdf_en": ["2024 - Fillable PDF", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5004-s12-fill-24e.pdf"],
       "fill_pdf_fr": ["2024 - PDF à remplir", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5004-s12-fill-24f.pdf"],
@@ -84,17 +95,6 @@
       "stnd_pdf_fr": ["2017 - PDF standard", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5104-s12-17f.pdf"],
       "lrge_pdf_en": ["2017 - Large print PDF", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5004-s12-lp-17e.pdf"],
       "lrge_pdf_fr": ["2017 - PDF en gros caractères", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5104-s12-lp-17f.pdf"],
-      "dwld_etx_en": ["Not available"],
-      "dwld_etx_fr": ["Pas disponible"]
-    },
-    {
-      "year": "2016",
-      "fill_pdf_en": ["2016 - Fillable PDF", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5004-s12-fill-16e.pdf"],
-      "fill_pdf_fr": ["2016 - PDF à remplir", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5104-s12-fill-16f.pdf"],
-      "stnd_pdf_en": ["2016 - Standard PDF", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5004-s12-16e.pdf"],
-      "stnd_pdf_fr": ["2016 - PDF standard", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5104-s12-16f.pdf"],
-      "lrge_pdf_en": ["2016 - Large print PDF", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5004-s12-lp-16e.pdf"],
-      "lrge_pdf_fr": ["2016 - PDF en gros caractères", "/content/dam/cra-arc/formspubs/pbg/5004-s12/5104-s12-lp-16f.pdf"],
       "dwld_etx_en": ["Not available"],
       "dwld_etx_fr": ["Pas disponible"]
     }]

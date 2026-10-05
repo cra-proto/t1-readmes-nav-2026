@@ -1,14 +1,14 @@
 {
   "data": [{
       "year": "2025",
-      "fill_pdf_en": ["Not applicable"],
-      "fill_pdf_fr": ["Pas applicable"],
-      "stnd_pdf_en": ["Not applicable"],
-      "stnd_pdf_fr": ["Pas applicable"],
-      "lrge_pdf_en": ["Not applicable"],
-      "lrge_pdf_fr": ["Pas applicable"],
-      "dwld_etx_en": ["Not applicable"],
-      "dwld_etx_fr": ["Pas applicable"]
+      "fill_pdf_en": ["2025 - Fillable PDF", "/content/dam/cra-arc/formspubs/pbg/5009-r/5009-r-fill-25e.pdf"],
+      "fill_pdf_fr": ["2025 - PDF à remplir", "/content/dam/cra-arc/formspubs/pbg/5009-r/5009-r-fill-25f.pdf"],
+      "stnd_pdf_en": ["2025 - Standard PDF", "/content/dam/cra-arc/formspubs/pbg/5009-r/5009-r-25e.pdf"],
+      "stnd_pdf_fr": ["2025 - PDF standard", "/content/dam/cra-arc/formspubs/pbg/5009-r/5009-r-25f.pdf"],
+      "lrge_pdf_en": ["2025 - Large print PDF", "/content/dam/cra-arc/formspubs/pbg/5009-r/5009-r-lp-25e.pdf"],
+      "lrge_pdf_fr": ["2025 - PDF en gros caractères", "/content/dam/cra-arc/formspubs/pbg/5009-r/5009-r-lp-25f.pdf"],
+      "dwld_etx_en": ["2025 - E-text file", "/content/dam/cra-arc/formspubs/pbg/5009-r/5009-r-25e.txt"],
+      "dwld_etx_fr": ["2025 - Fichier .txt", "/content/dam/cra-arc/formspubs/pbg/5009-r/5009-r-25f.txt"]
     },
     {
       "year": "2024",
@@ -78,14 +78,14 @@
     },
     {
       "year": "2018",
-      "fill_pdf_en": ["2018 - Fillable PDF", "/content/dam/cra-arc/formspubs/pbg/5005-d2/5005-d2-fill-18e.pdf"],
-      "fill_pdf_fr": ["2018 - PDF à remplir", "/content/dam/cra-arc/formspubs/pbg/5005-d2/5105-d2-fill-18f.pdf"],
-      "stnd_pdf_en": ["2018 - Standard PDF", "/content/dam/cra-arc/formspubs/pbg/5005-d2/5005-d2-18e.pdf"],
-      "stnd_pdf_fr": ["2018 - PDF standard", "/content/dam/cra-arc/formspubs/pbg/5005-d2/5105-d2-18f.pdf"],
-      "lrge_pdf_en": ["2018 - Large print PDF", "/content/dam/cra-arc/formspubs/pbg/5005-d2/5005-d2-lp-18e.pdf"],
-      "lrge_pdf_fr": ["2018 - PDF en gros caractères", "/content/dam/cra-arc/formspubs/pbg/5005-d2/5105-d2-lp-18f.pdf"],
-      "dwld_etx_en": ["2018 - E-text file", "/content/dam/cra-arc/formspubs/pbg/5005-d2/5005-d2-18e.txt"],
-      "dwld_etx_fr": ["2018 - Fichier .txt", "/content/dam/cra-arc/formspubs/pbg/5005-d2/5105-d2-18f.txt"]
+      "fill_pdf_en": ["Not applicable"],
+      "fill_pdf_fr": ["Pas applicable"],
+      "stnd_pdf_en": ["Not applicable"],
+      "stnd_pdf_fr": ["Pas applicable"],
+      "lrge_pdf_en": ["Not applicable"],
+      "lrge_pdf_fr": ["Pas applicable"],
+      "dwld_etx_en": ["Not applicable"],
+      "dwld_etx_fr": ["Pas applicable"]
     },
     {
       "year": "2017",

@@ -4,14 +4,12 @@
 #   - Comment information for other developers
 #   - Clean up outdated comments
 #
-# The following table data are exceptions and MUST be updated manually each year:
-# 5000-r (current)
-# 5015-r (non-current)
-# ---------------------------------------
-
-# -- Fake form names, for testing only --
-# 5000-x
-# 5016-s2
+# The following table data are exceptions and MUST be updated manually each year.
+# 5000-r
+#    (5000-r is current)
+# 5015-r
+#     (5015-r is not-current)
+# You could run the script with these, just confirm format availability for the new archived year.
 # ---------------------------------------
 
 # Current forms
@@ -78,7 +76,8 @@
 5008-tc
 5009-c
 5009-d
-# 5009-r (Renewed for 2025 – No prior years within 10 years, uncomment for 2026 and onward)
+5009-r
+#    (5009 has a table again for 2026 and onward)
 5009-s11
 5009-s2
 5009-s6
