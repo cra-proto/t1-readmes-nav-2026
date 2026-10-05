@@ -44,4 +44,4 @@ Instructions to follow for each form listed to ensure no readme is generated if 
  - Use GitHub versioning and VScode to do the comparison - this should work on CRA computers I think
 
 6 - Drop the tables in the right assets folder:
- - (Add folder here)
+ - https://author-canada-prod.adobecqms.net/assets.html/content/dam/cra-arc/formspubs/t1-includes/pbg-table-json
