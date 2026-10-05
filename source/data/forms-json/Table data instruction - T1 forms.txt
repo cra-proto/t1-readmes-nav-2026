@@ -1,0 +1,47 @@
+Table data instruction - T1 forms
+
+1 - In the list (\forms-json\script\recent-T1-forms-9yrs.txt):
+ - Uncomment any forms that were new the previous year (E.g. 5009-r for 2026 annual upload)
+ - Add any products (commented out) that are being reused this year after 10 years or more - if IPD has notified you of any - to be uncommented out the following year.
+
+2 - In the template (\forms-json\script\t1-form-template-table-data.json):
+ - Remove the oldest archived year (remember to also delete the comma preceding that year)
+ - Add the newest archive year
+ - Manually update the forms that are province specific (5000-r and 5015-r)
+    - You can optionally run the script for those 2 to check the availability of the formats for the new archived year, or you can check manually, or refer to the live readme
+    - Add the provinces for the new year - get the information from IPD, or use the intro of the product for the status quo.
+
+3 - Run the script (\forms-json\script\create-T1-json-form-tables.ps1). 
+ - This will take some time.
+ - The script uses the template to generate a json file for each form
+ - The file initially contain realative links for every since format for every year
+ - The second part of the script check that the absolute version of the link is live on Canada for each pair of English and French links
+ - It replaces any cells and rows that are not live in both languages with N/A text
+
+
+4 - If any tables are disappearing: 
+ - The script will delete the table file
+ - The script will notify you both in the prompt window and AU log
+ - The notification will have instructions to follow:
+
+---------------------------------------
+Annual upload log
+Generated: {{GENERATED_AT}} 
+
+The following readmes must be unpublished
+(table row data is not applicable for ALL years in the range: {{YEAR_RANGE}}):
+
+{{FORM_LIST}}
+
+Instructions to follow for each form listed to ensure no readme is generated if the form is no longer current:
+1 - Uncheck "Prior years" in the EDDS file browser XML tab
+2 - Unpublish the form's readme if both prior year and current version are unchecked
+3 - Unpublish or delete the form's data-table json
+4 - Unpublish or delete the form's format asset
+---------------------------------------
+
+5 - Manually check the tables (several spot checks) against the current year tables (preview versus prod) to see make sure nothing went wrong
+ - Use GitHub versioning and VScode to do the comparison - this should work on CRA computers I think
+
+6 - Drop the tables in the right assets folder:
+ - (Add folder here)
