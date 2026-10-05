@@ -50,7 +50,7 @@
       "stnd_pdf_en": ["2021 - Standard PDF", "/content/dam/cra-arc/formspubs/pbg/5014-s6/5014-s6-21e.pdf"],
       "stnd_pdf_fr": ["2021 - PDF standard", "/content/dam/cra-arc/formspubs/pbg/5014-s6/5014-s6-21f.pdf"],
       "lrge_pdf_en": ["Not available"],
-      "lrge_pdf_fr": ["Pas disponible"],
+      "lrge_pdf_fr": ["Sans objet"],
       "dwld_etx_en": ["Not available"],
       "dwld_etx_fr": ["Pas disponible"]
     },
@@ -61,7 +61,7 @@
       "stnd_pdf_en": ["2020 - Standard PDF", "/content/dam/cra-arc/formspubs/pbg/5014-s6/5014-s6-20e.pdf"],
       "stnd_pdf_fr": ["2020 - PDF standard", "/content/dam/cra-arc/formspubs/pbg/5014-s6/5014-s6-20f.pdf"],
       "lrge_pdf_en": ["Not available"],
-      "lrge_pdf_fr": ["Pas disponible"],
+      "lrge_pdf_fr": ["Sans objet"],
       "dwld_etx_en": ["2020 - E-text file", "/content/dam/cra-arc/formspubs/pbg/5014-s6/5014-s6-20e.txt"],
       "dwld_etx_fr": ["2020 - Fichier .txt", "/content/dam/cra-arc/formspubs/pbg/5014-s6/5014-s6-20f.txt"]
     },
@@ -72,7 +72,7 @@
       "stnd_pdf_en": ["2019 - Standard PDF", "/content/dam/cra-arc/formspubs/pbg/5014-s6/5014-s6-19e.pdf"],
       "stnd_pdf_fr": ["2019 - PDF standard", "/content/dam/cra-arc/formspubs/pbg/5014-s6/5114-s6-19f.pdf"],
       "lrge_pdf_en": ["Not available"],
-      "lrge_pdf_fr": ["Pas disponible"],
+      "lrge_pdf_fr": ["Sans objet"],
       "dwld_etx_en": ["Not available"],
       "dwld_etx_fr": ["Pas disponible"]
     },
@@ -83,7 +83,7 @@
       "stnd_pdf_en": ["2018 - Standard PDF", "/content/dam/cra-arc/formspubs/pbg/5014-s6/5014-s6-18e.pdf"],
       "stnd_pdf_fr": ["2018 - PDF standard", "/content/dam/cra-arc/formspubs/pbg/5014-s6/5114-s6-18f.pdf"],
       "lrge_pdf_en": ["Not available"],
-      "lrge_pdf_fr": ["Pas disponible"],
+      "lrge_pdf_fr": ["Sans objet"],
       "dwld_etx_en": ["Not available"],
       "dwld_etx_fr": ["Pas disponible"]
     },
@@ -94,7 +94,7 @@
       "stnd_pdf_en": ["2017 - Standard PDF", "/content/dam/cra-arc/formspubs/pbg/5014-s6/5014-s6-17e.pdf"],
       "stnd_pdf_fr": ["2017 - PDF standard", "/content/dam/cra-arc/formspubs/pbg/5014-s6/5114-s6-17f.pdf"],
       "lrge_pdf_en": ["Not available"],
-      "lrge_pdf_fr": ["Pas disponible"],
+      "lrge_pdf_fr": ["Sans objet"],
       "dwld_etx_en": ["Not available"],
       "dwld_etx_fr": ["Pas disponible"]
     }]

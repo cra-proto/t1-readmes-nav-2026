@@ -32,7 +32,7 @@ $scriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $defaultGuideOutputDir = 'C:\my-working-files\GitHub\t1-readmes-nav-2026\source\data\guides-json\table-data'
 $defaultOutputEncoding = [System.Text.UTF8Encoding]::new($false)
 $EN_NA = @('Not available')
-$FR_NA = @('Pas disponible')
+$FR_NA = @('Sans objet')
 
 function Assert-NoMojibakeText {
   param(
@@ -722,7 +722,7 @@ function Is-NotAvailablePair {
   if ($null -eq $Value) { return $false }
   if ($Value -is [object[]] -and $Value.Count -eq 1) {
     if ($Lang -eq 'en') { return ($Value[0] -eq 'Not available') }
-    if ($Lang -eq 'fr') { return ($Value[0] -eq 'Pas disponible') }
+    if ($Lang -eq 'fr') { return ($Value[0] -eq 'Sans objet') }
   }
   return $false
 }
@@ -775,7 +775,7 @@ function Normalize-NaArrayLiterals {
   param([Parameter(Mandatory)] [string]$JsonText)
   $out = $JsonText
   $out = [regex]::Replace($out, '("(?<k>[^"]+_en)"\s*:\s*)"Not available"', '$1["Not available"]')
-  $out = [regex]::Replace($out, '("(?<k>[^"]+_fr)"\s*:\s*)"Pas disponible"', '$1["Pas disponible"]')
+  $out = [regex]::Replace($out, '("(?<k>[^"]+_fr)"\s*:\s*)"Sans objet"', '$1["Sans objet"]')
   return $out
 }
 
