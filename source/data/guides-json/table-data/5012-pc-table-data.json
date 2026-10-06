@@ -1,13 +1,24 @@
 {
   "data": [
     {
-      "year": "2025",
-      "html_acc_en": ["2025<span class=\"nowrap\"> - HTML</span>", "/content/canadasite/en/revenue-agency/services/forms-publications/tax-packages-years/general-income-tax-benefit-package/northwest-territories/5012-pc.html"],
-      "html_acc_fr": ["2025<span class=\"nowrap\"> - HTML</span>", "/content/canadasite/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition/trousse-generale-impot-prestations/territoires-nord-ouest/5012-pc.html"],
-      "stnd_pdf_en": ["2025 - Standard PDF", "/content/dam/cra-arc/formspubs/pub/5012-pc/5012-pc-25e.pdf"],
-      "stnd_pdf_fr": ["2025 - PDF standard", "/content/dam/cra-arc/formspubs/pub/5012-pc/5012-pc-25f.pdf"],
+      "year": "2026",
+      "html_acc_en": ["2026<span class=\"nowrap\"> - HTML</span>", "/content/canadasite/en/revenue-agency/services/forms-publications/tax-packages-years/general-income-tax-benefit-package/northwest-territories/5012-pc.html"],
+      "html_acc_fr": ["2026<span class=\"nowrap\"> - HTML</span>", "/content/canadasite/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition/trousse-generale-impot-prestations/territoires-nord-ouest/5012-pc.html"],
+      "stnd_pdf_en": ["Not available"],
+      "stnd_pdf_fr": ["Sans objet"],
       "lrge_pdf_en": ["Not available"],
       "lrge_pdf_fr": ["Sans objet"],
+      "dwld_etx_en": ["Not available"],
+      "dwld_etx_fr": ["Sans objet"]
+    },
+    {
+      "year": "2025",
+      "html_acc_en": ["2025<span class=\"nowrap\"> - HTML</span>", "/content/canadasite/en/revenue-agency/services/forms-publications/tax-packages-years/archived-general-income-tax-benefit-package-2025/northwest-territories/5012-pc.html"],
+      "html_acc_fr": ["2025<span class=\"nowrap\"> - HTML</span>", "/content/canadasite/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition/archivee-trousse-generale-impot-prestations-2025/territoires-nord-ouest/5012-pc.html"],
+      "stnd_pdf_en": ["2025 - Standard PDF", "/content/dam/cra-arc/formspubs/pub/5012-pc/5012-pc-25e.pdf"],
+      "stnd_pdf_fr": ["2025 - PDF standard", "/content/dam/cra-arc/formspubs/pub/5012-pc/5012-pc-25f.pdf"],
+      "lrge_pdf_en": ["2025 - Large print PDF", "/content/dam/cra-arc/formspubs/pub/5012-pc/5012-pc-lp-25e.pdf"],
+      "lrge_pdf_fr": ["2025 - PDF en gros caractères", "/content/dam/cra-arc/formspubs/pub/5012-pc/5012-pc-lp-25f.pdf"],
       "dwld_etx_en": ["2025 - E-text file", "/content/dam/cra-arc/formspubs/pub/5012-pc/5012-pc-25e.txt"],
       "dwld_etx_fr": ["2025 - Fichier .txt", "/content/dam/cra-arc/formspubs/pub/5012-pc/5012-pc-25f.txt"]
     },
@@ -42,7 +53,7 @@
       "lrge_pdf_en": ["Not available"],
       "lrge_pdf_fr": ["Sans objet"],
       "dwld_etx_en": ["Not available"],
-      "dwld_etx_fr": ["Pas disponible"]
+      "dwld_etx_fr": ["Sans objet"]
     },
     {
       "year": "2021",
@@ -53,7 +64,7 @@
       "lrge_pdf_en": ["Not available"],
       "lrge_pdf_fr": ["Sans objet"],
       "dwld_etx_en": ["Not available"],
-      "dwld_etx_fr": ["Pas disponible"]
+      "dwld_etx_fr": ["Sans objet"]
     },
     {
       "year": "2020",
@@ -75,7 +86,7 @@
       "lrge_pdf_en": ["Not available"],
       "lrge_pdf_fr": ["Sans objet"],
       "dwld_etx_en": ["Not available"],
-      "dwld_etx_fr": ["Pas disponible"]
+      "dwld_etx_fr": ["Sans objet"]
     },
     {
       "year": "2018",
@@ -86,7 +97,7 @@
       "lrge_pdf_en": ["Not available"],
       "lrge_pdf_fr": ["Sans objet"],
       "dwld_etx_en": ["Not available"],
-      "dwld_etx_fr": ["Pas disponible"]
+      "dwld_etx_fr": ["Sans objet"]
     },
     {
       "year": "2017",
@@ -97,18 +108,7 @@
       "lrge_pdf_en": ["Not available"],
       "lrge_pdf_fr": ["Sans objet"],
       "dwld_etx_en": ["Not available"],
-      "dwld_etx_fr": ["Pas disponible"]
-    },
-    {
-      "year": "2016",
-      "html_acc_en": ["2016<span class=\"nowrap\"> - HTML</span>", "/content/canadasite/en/revenue-agency/services/forms-publications/tax-packages-years/archived-general-income-tax-benefit-package-2016/northwest-territories/5012-pc/information-residents-northwest-territories.html"],
-      "html_acc_fr": ["2016<span class=\"nowrap\"> - HTML</span>", "/content/canadasite/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition/archivee-trousse-generale-impot-prestations-2016/territoires-nord-ouest/5012-pc/renseignements-residents-territoires-nord-ouest.html"],
-      "stnd_pdf_en": ["2016 - Standard PDF", "/content/dam/cra-arc/formspubs/pub/5012-pc/5012-pc-16e.pdf"],
-      "stnd_pdf_fr": ["2016 - PDF standard", "/content/dam/cra-arc/formspubs/pub/5012-pc/5112-pc-16f.pdf"],
-      "lrge_pdf_en": ["Not available"],
-      "lrge_pdf_fr": ["Sans objet"],
-      "dwld_etx_en": ["Not available"],
-      "dwld_etx_fr": ["Pas disponible"]
+      "dwld_etx_fr": ["Sans objet"]
     }
   ]
 }

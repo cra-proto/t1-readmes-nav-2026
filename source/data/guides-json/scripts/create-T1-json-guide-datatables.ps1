@@ -1,12 +1,80 @@
 <#
-create-T1-json-guide-datatables.ps1
+.SYNOPSIS
+Generates and validates bilingual T1 guide table-data JSON files.
 
-Generate guide JSON table data from:
-1) the guide template JSON
-2) a guide-to-province metadata file
+.DESCRIPTION
+Builds one JSON table-data file for each guide listed in the publications list.
+The template supplies the year rows, labels, and available formats, while the
+guide metadata supplies province, territory, and non-resident URL information.
 
-The script does not self-seed from table-data.
-It validates bilingual link pairs after generation.
+The newest template year is treated as the current year and uses current
+Canada.ca paths. Older years use archived paths. HTML links for the most recent
+prior year are assumed to exist because those pages are published during the
+same annual upload that consumes these tables. PDF, large-print PDF, and e-text
+links for that year are still validated normally.
+
+Generated JSON retains publishing-system paths such as /content/canadasite/
+and /content/dam/. For link validation only, these paths are converted to their
+public https://www.canada.ca equivalents. Bilingual links are validated as a
+pair; when either language fails, both values are written as "Not available"
+and "Sans objet".
+
+The script generates data from the template and metadata every time. It does
+not use existing files in table-data as input. Special historical URL and file
+naming rules for guides such as 5013-g are handled during generation.
+
+.PARAMETER PubsListPath
+Path to the list of guide codes to generate. Blank and commented lines are
+ignored. Relative paths are resolved from the script directory first.
+
+.PARAMETER TemplatePath
+Path to the guide table-data template JSON. Its newest two years determine the
+current year and most recent prior year.
+
+.PARAMETER GuideMetadataPath
+Path to the JSON map containing province, territory, and non-resident metadata.
+
+.PARAMETER OutputDir
+Destination directory for generated JSON. When omitted, the guide table-data
+directory in this repository is used.
+
+.PARAMETER TimeoutSec
+Timeout, in seconds, for each HTTP validation attempt.
+
+.PARAMETER RequestDelayMs
+Optional delay, in milliseconds, before each HTTP request.
+
+.PARAMETER RetryCount
+Number of retries for transient HTTP failures after the initial attempt.
+
+.PARAMETER RetryDelayMs
+Initial retry delay in milliseconds. Subsequent retries use exponential backoff.
+
+.PARAMETER MaxRedirects
+Maximum number of HTTP redirects followed during validation.
+
+.PARAMETER GenerateOnly
+Generates JSON files without validating their links.
+
+.PARAMETER PauseBeforeLinkCheck
+Prompts after generation and before link validation.
+
+.PARAMETER DryRun
+Builds and validates data in memory without writing output files.
+
+.EXAMPLE
+.\create-T1-json-guide-datatables.ps1 -GenerateOnly
+
+Generates all configured guide files without checking their links.
+
+.EXAMPLE
+.\create-T1-json-guide-datatables.ps1 -DryRun -RetryCount 0
+
+Runs generation and validation without changing table-data files.
+
+.NOTES
+Author: Parissa Nahachewsky
+Created: 2026-10-05
 #>
 
 [CmdletBinding()]
@@ -240,22 +308,23 @@ function ConvertTo-JsonStringLiteral {
   $builder = New-Object System.Text.StringBuilder
   [void]$builder.Append('"')
   foreach ($char in $Value.ToCharArray()) {
-    switch ([int][char]$char) {
-      8 { [void]$builder.Append('\b'); continue }
-      9 { [void]$builder.Append('\t'); continue }
-      10 { [void]$builder.Append('\n'); continue }
-      12 { [void]$builder.Append('\f'); continue }
-      13 { [void]$builder.Append('\r'); continue }
-      34 { [void]$builder.Append('\"'); continue }
-      92 { [void]$builder.Append('\\'); continue }
+    $charCode = [int][char]$char
+    switch ($charCode) {
+      8 { [void]$builder.Append('\b') }
+      9 { [void]$builder.Append('\t') }
+      10 { [void]$builder.Append('\n') }
+      12 { [void]$builder.Append('\f') }
+      13 { [void]$builder.Append('\r') }
+      34 { [void]$builder.Append('\"') }
+      92 { [void]$builder.Append('\\') }
+      default {
+        if ($charCode -lt 32) {
+          [void]$builder.AppendFormat('\u{0:x4}', $charCode)
+        } else {
+          [void]$builder.Append($char)
+        }
+      }
     }
-
-    if ([int][char]$char -lt 32) {
-      [void]$builder.AppendFormat('\u{0:x4}', [int][char]$char)
-      continue
-    }
-
-    [void]$builder.Append($char)
   }
 
   [void]$builder.Append('"')
@@ -323,45 +392,21 @@ function New-LinkArray {
   return @($Label, $Url)
 }
 
-function Join-FrenchPrepositionAndName {
-  param(
-    [Parameter(Mandatory)] [string]$Preposition,
-    [Parameter(Mandatory)] [string]$Name
-  )
-
-  $trimmedPreposition = $Preposition.TrimEnd()
-  $trimmedName = $Name.TrimStart()
-
-  if ($trimmedPreposition.EndsWith("'")) {
-    return "$trimmedPreposition$trimmedName"
-  }
-
-  return "$trimmedPreposition $trimmedName"
-}
-
-function Get-ProvinceLabelFrPrefix {
-  param([Parameter(Mandatory)] [hashtable]$Meta)
-
-  if (-not $Meta.ContainsKey('name_fr')) {
-    throw "Guide metadata missing name_fr."
-  }
-  if (-not $Meta.ContainsKey('fr_preposition')) {
-    throw "Guide metadata missing fr_preposition."
-  }
-
-  $provinceName = Join-FrenchPrepositionAndName -Preposition ([string]$Meta.fr_preposition) -Name ([string]$Meta.name_fr)
-  return "Renseignements sur l'imp$([char]0x00F4)t $provinceName"
-}
-
 function Get-ProvinceHtmlUrls {
   param(
     [Parameter(Mandatory)] [string]$GuideCode,
     [Parameter(Mandatory)] [string]$Year,
+    [Parameter(Mandatory)] [string]$CurrentYear,
     [Parameter(Mandatory)] [hashtable]$Meta
   )
 
-  $enBase = "https://www.canada.ca/en/revenue-agency/services/forms-publications/tax-packages-years/archived-general-income-tax-benefit-package-$Year/$($Meta.slug_en)"
-  $frBase = "https://www.canada.ca/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition/archivee-trousse-generale-impot-prestations-$Year/$($Meta.slug_fr)"
+  if ($Year -eq $CurrentYear) {
+    $enBase = "/content/canadasite/en/revenue-agency/services/forms-publications/tax-packages-years/general-income-tax-benefit-package/$($Meta.slug_en)"
+    $frBase = "/content/canadasite/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition/trousse-generale-impot-prestations/$($Meta.slug_fr)"
+  } else {
+    $enBase = "/content/canadasite/en/revenue-agency/services/forms-publications/tax-packages-years/archived-general-income-tax-benefit-package-$Year/$($Meta.slug_en)"
+    $frBase = "/content/canadasite/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition/archivee-trousse-generale-impot-prestations-$Year/$($Meta.slug_fr)"
+  }
 
   if ([int]$Year -ge 2023) {
     return [pscustomobject]@{
@@ -384,18 +429,9 @@ function Get-ProvinceHtmlUrls {
       }
     }
     'nova_scotia' {
-      if ($Year -eq '2022') {
-        return [pscustomobject]@{
-          En = "$enBase/$GuideCode/information-residents-$($Meta.slug_en).html"
-          Fr = "$frBase/$GuideCode/renseignements-residents-$($Meta.slug_fr).html"
-        }
-      }
-
-      if ([int]$Year -le 2021) {
-        return [pscustomobject]@{
-          En = "$enBase/$GuideCode/information-residents-$($Meta.slug_en).html"
-          Fr = $null
-        }
+      return [pscustomobject]@{
+        En = "$enBase/$GuideCode/information-residents-$($Meta.slug_en).html"
+        Fr = "$frBase/$GuideCode/renseignements-residents-$($Meta.slug_fr).html"
       }
     }
     'nunavut' {
@@ -417,34 +453,33 @@ function Get-GuideHtmlArrays {
   param(
     [Parameter(Mandatory)] [string]$GuideCode,
     [Parameter(Mandatory)] [string]$Year,
+    [Parameter(Mandatory)] [string]$CurrentYear,
     [Parameter(Mandatory)] [hashtable]$Meta,
     [Parameter(Mandatory)] [psobject]$TemplateRow
   )
 
-  if ($Year -eq '2025') {
-    return [pscustomobject]@{
-      En = @($TemplateRow.html_acc_en)
-      Fr = @($TemplateRow.html_acc_fr)
-    }
-  }
+  $labelEn = [string]$TemplateRow.html_acc_en[0]
+  $labelFr = [string]$TemplateRow.html_acc_fr[0]
 
   if ($Meta.kind -eq 'non_resident') {
-    $labelEn = "$($Meta.label_en_prefix) for $Year"
-    $labelFr = "$($Meta.label_fr_prefix) pour $Year"
-    $enBase = "https://www.canada.ca/en/revenue-agency/services/forms-publications/tax-packages-years/archived-general-income-tax-benefit-package-$Year/non-residents/$GuideCode"
-    $frBase = "https://www.canada.ca/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition/archivee-trousse-generale-impot-prestations-$Year/non-residents/$GuideCode"
+    if ($Year -eq $CurrentYear) {
+      $enBase = "/content/canadasite/en/revenue-agency/services/forms-publications/tax-packages-years/general-income-tax-benefit-package/non-residents/$GuideCode"
+      $frBase = "/content/canadasite/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition/trousse-generale-impot-prestations/non-residents/$GuideCode"
+    } else {
+      $enBase = "/content/canadasite/en/revenue-agency/services/forms-publications/tax-packages-years/archived-general-income-tax-benefit-package-$Year/non-residents/$GuideCode"
+      $frBase = "/content/canadasite/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition/archivee-trousse-generale-impot-prestations-$Year/non-residents/$GuideCode"
+    }
 
-    switch ($Year) {
-      '2024' { $enUrl = "$enBase/income-tax-benefit-guide-non-residents-deemed-residents-canada.html"; $frUrl = "$frBase/guide-impot-prestations-non-residents-residents-reputes-canada.html" }
-      '2023' { $enUrl = "$enBase/income-tax-benefit-guide-non-residents-deemed-residents-canada.html"; $frUrl = "$frBase/guide-impot-prestations-non-residents-residents-reputes-canada.html" }
-      '2022' { $enUrl = "$enBase/income-tax-benefit-guide-non-residents-deemed-residents-canada.html"; $frUrl = "$frBase/guide-impot-prestations-non-residents-residents-reputes-canada.html" }
-      '2021' { $enUrl = "$enBase/income-tax-benefit-guide-non-residents-deemed-residents-canada.html"; $frUrl = "$frBase/guide-impot-prestations-non-residents-residents-reputes-canada.html" }
-      '2020' { $enUrl = "$enBase/income-tax-benefit-guide-non-residents-deemed-residents-canada.html"; $frUrl = "$frBase/guide-impot-prestations-non-residents-residents-reputes-canada.html" }
-      '2019' { $enUrl = "$enBase/income-tax-benefit-guide-non-residents-deemed-residents-canada.html"; $frUrl = "$frBase/guide-impot-prestations-non-residents-residents-reputes-canada.html" }
-      '2018' { $enUrl = "$enBase/general-income-tax-benefit-guide-non-residents-deemed-residents-canada.html"; $frUrl = "$frBase/guide-general-impot-prestations-non-residents-residents-reputes-canada.html" }
-      '2017' { $enUrl = "$enBase/general-income-tax-benefit-guide-non-residents-deemed-residents-canada.html"; $frUrl = "$frBase/guide-general-impot-prestations-non-residents-residents-reputes-canada.html" }
-      '2016' { $enUrl = "$enBase/general-guide-non-residents-general-information.html"; $frUrl = "$frBase/guide-general-impot-prestations-non-residents-residents-reputes-canada-remplir-votre-declaration.html" }
-      default { throw "Unhandled non-resident year: $Year" }
+    if ([int]$Year -ge 2019) {
+      $enUrl = "$enBase/income-tax-benefit-guide-non-residents-deemed-residents-canada.html"
+      $frUrl = "$frBase/guide-impot-prestations-non-residents-residents-reputes-canada.html"
+    } else {
+      switch ($Year) {
+        '2018' { $enUrl = "$enBase/general-income-tax-benefit-guide-non-residents-deemed-residents-canada.html"; $frUrl = "$frBase/guide-general-impot-prestations-non-residents-residents-reputes-canada.html" }
+        '2017' { $enUrl = "$enBase/general-income-tax-benefit-guide-non-residents-deemed-residents-canada.html"; $frUrl = "$frBase/guide-general-impot-prestations-non-residents-residents-reputes-canada.html" }
+        '2016' { $enUrl = "$enBase/general-guide-non-residents-general-information.html"; $frUrl = "$frBase/guide-general-impot-prestations-non-residents-residents-reputes-canada-remplir-votre-declaration.html" }
+        default { throw "Unhandled non-resident year: $Year" }
+      }
     }
 
     return [pscustomobject]@{
@@ -453,9 +488,7 @@ function Get-GuideHtmlArrays {
     }
   }
 
-  $urls = Get-ProvinceHtmlUrls -GuideCode $GuideCode -Year $Year -Meta $Meta
-  $labelEn = "$($Meta.name_en) tax information for $Year"
-  $labelFr = "$(Get-ProvinceLabelFrPrefix -Meta $Meta) pour $Year"
+  $urls = Get-ProvinceHtmlUrls -GuideCode $GuideCode -Year $Year -CurrentYear $CurrentYear -Meta $Meta
 
   return [pscustomobject]@{
     En = New-LinkArray -Label $labelEn -Url $urls.En
@@ -478,10 +511,11 @@ function Get-GuideFileFamily {
     return $GuideCode
   }
 
+  if ([int]$Year -ge 2023) {
+    return '5013-g'
+  }
+
   switch ($Year) {
-    '2025' { return '5013-g' }
-    '2024' { return '5013-g' }
-    '2023' { return '5013-g' }
     '2022' {
       if ($Field -eq 'dwld_etx') { return '5013g' }
       return '5013-g'
@@ -519,7 +553,7 @@ function Get-GuideFileArray {
 
   $family = Get-GuideFileFamily -GuideCode $GuideCode -Year $Year -Lang $Lang -Field $Field
   $yy = Get-TwoDigitYear -Year $Year
-  $folder = "https://www.canada.ca/content/dam/cra-arc/formspubs/pub/$GuideCode"
+  $folder = "/content/dam/cra-arc/formspubs/pub/$GuideCode"
   $label = [string]$TemplateValue[0]
 
   switch ($Field) {
@@ -542,6 +576,7 @@ function Build-GuideDocumentFromTemplate {
   param(
     [Parameter(Mandatory)] [psobject]$TemplateDocument,
     [Parameter(Mandatory)] [string]$GuideCode,
+    [Parameter(Mandatory)] [string]$CurrentYear,
     [Parameter(Mandatory)] [hashtable]$MetadataMap
   )
 
@@ -554,7 +589,7 @@ function Build-GuideDocumentFromTemplate {
 
   foreach ($templateRow in $TemplateDocument.data) {
     $year = [string]$templateRow.year
-    $html = Get-GuideHtmlArrays -GuideCode $GuideCode -Year $year -Meta $meta -TemplateRow $templateRow
+    $html = Get-GuideHtmlArrays -GuideCode $GuideCode -Year $year -CurrentYear $CurrentYear -Meta $meta -TemplateRow $templateRow
 
     $rows.Add([ordered]@{
       year = $year
@@ -581,6 +616,15 @@ function Test-Url200 {
     [int]$RetryDelayMs = 500,
     [int]$MaxRedirects = 8
   )
+
+  # Resolve internal Canada.ca paths only for HTTP validation. Generated JSON
+  # keeps the original root-relative paths used by the publishing system.
+  $requestUrl = $Url
+  if ($requestUrl.StartsWith('/content/canadasite/')) {
+    $requestUrl = "https://www.canada.ca/" + $requestUrl.Substring('/content/canadasite/'.Length)
+  } elseif ($requestUrl.StartsWith('/')) {
+    $requestUrl = "https://www.canada.ca$requestUrl"
+  }
 
   function Get-HttpStatusFromError {
     param([Parameter(Mandatory)] $ErrorRecord)
@@ -636,7 +680,7 @@ function Test-Url200 {
       }
 
       try {
-        $response = Invoke-WebRequest -Uri $AttemptUrl -Method $Method -TimeoutSec $AttemptTimeoutSec -MaximumRedirection $AttemptMaxRedirects -ErrorAction Stop
+        $response = Invoke-WebRequest -Uri $AttemptUrl -Method $Method -TimeoutSec $AttemptTimeoutSec -MaximumRedirection $AttemptMaxRedirects -UseBasicParsing -ErrorAction Stop
         $statusCode = [int]$response.StatusCode
         $finalUrl = Get-FinalResponseUri -Response $response
         $isCanada404Landing = Is-Canada404LandingUrl -FinalUrl $finalUrl
@@ -674,10 +718,10 @@ function Test-Url200 {
     }
   }
 
-  $headResult = Invoke-UrlAttempt -AttemptUrl $Url -Method Head -AttemptTimeoutSec $TimeoutSec -AttemptRequestDelayMs $RequestDelayMs -AttemptRetryCount $RetryCount -AttemptRetryDelayMs $RetryDelayMs -AttemptMaxRedirects $MaxRedirects
+  $headResult = Invoke-UrlAttempt -AttemptUrl $requestUrl -Method Head -AttemptTimeoutSec $TimeoutSec -AttemptRequestDelayMs $RequestDelayMs -AttemptRetryCount $RetryCount -AttemptRetryDelayMs $RetryDelayMs -AttemptMaxRedirects $MaxRedirects
   if ($headResult.Success -and -not $headResult.Redirected) { return $true }
 
-  $getResult = Invoke-UrlAttempt -AttemptUrl $Url -Method Get -AttemptTimeoutSec $TimeoutSec -AttemptRequestDelayMs $RequestDelayMs -AttemptRetryCount $RetryCount -AttemptRetryDelayMs $RetryDelayMs -AttemptMaxRedirects $MaxRedirects
+  $getResult = Invoke-UrlAttempt -AttemptUrl $requestUrl -Method Get -AttemptTimeoutSec $TimeoutSec -AttemptRequestDelayMs $RequestDelayMs -AttemptRetryCount $RetryCount -AttemptRetryDelayMs $RetryDelayMs -AttemptMaxRedirects $MaxRedirects
   if ($getResult.Success) { return $true }
 
   return $false
@@ -792,6 +836,14 @@ if (-not $PSBoundParameters.ContainsKey('OutputDir') -or [string]::IsNullOrWhite
 
 $templateFile = Read-TextFilePreserveEncoding -Path $TemplatePath
 $templateDocument = $templateFile.Text | ConvertFrom-Json
+$templateYears = @($templateDocument.data |
+  ForEach-Object { [int]$_.year } |
+  Sort-Object -Descending -Unique)
+if ($templateYears.Count -lt 2) {
+  throw "Guide template must contain at least two years to identify the most recent prior year."
+}
+$currentGuideYear = [string]$templateYears[0]
+$mostRecentPriorGuideYear = [string]$templateYears[1]
 $guideMetadataMap = Get-GuideMetadataMap -Path $GuideMetadataPath
 $pubsForGeneration = Get-PubsList -Path $PubsListPath -SkipComments
 if (-not $pubsForGeneration) {
@@ -809,7 +861,7 @@ foreach ($pub in $pubsForGeneration) {
     continue
   }
 
-  $document = Build-GuideDocumentFromTemplate -TemplateDocument $templateDocument -GuideCode $pub -MetadataMap $guideMetadataMap
+  $document = Build-GuideDocumentFromTemplate -TemplateDocument $templateDocument -GuideCode $pub -CurrentYear $currentGuideYear -MetadataMap $guideMetadataMap
   $outJson = (ConvertTo-TemplateJson -Document $document) + "`r`n"
   Assert-NoMojibakeText -Text $outJson -Context "$pub generated JSON"
   $outPath = Join-Path $OutputDir "$pub-table-data.json"
@@ -902,6 +954,13 @@ foreach ($pub in $pubsForGeneration) {
       $frUrl = Get-LinkUrl -Value $frVal
       if (-not $enUrl -and -not $frUrl) { continue }
       if (-not $enUrl -or -not $frUrl) { continue }
+
+      # The most recent prior-year HTML pages are published during the annual
+      # upload that also consumes these tables, so they cannot be live yet.
+      # Trust the generated bilingual HTML pair for that year only.
+      if ($base -eq 'html_acc' -and $yearValue -eq $mostRecentPriorGuideYear) {
+        continue
+      }
 
       $enValid = Test-Url200 -Url $enUrl -TimeoutSec $TimeoutSec -RequestDelayMs $RequestDelayMs -RetryCount $RetryCount -RetryDelayMs $RetryDelayMs -MaxRedirects $MaxRedirects
       $frValid = Test-Url200 -Url $frUrl -TimeoutSec $TimeoutSec -RequestDelayMs $RequestDelayMs -RetryCount $RetryCount -RetryDelayMs $RetryDelayMs -MaxRedirects $MaxRedirects
