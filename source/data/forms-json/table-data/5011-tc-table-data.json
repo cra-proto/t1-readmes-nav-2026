@@ -30,7 +30,7 @@
       "lrge_pdf_en": ["2023 - Large print PDF", "/content/dam/cra-arc/formspubs/pbg/5011-tc/5011-tc-lp-23e.pdf"],
       "lrge_pdf_fr": ["2023 - PDF en gros caractères", "/content/dam/cra-arc/formspubs/pbg/5011-tc/5011-tc-lp-23f.pdf"],
       "dwld_etx_en": ["Not available"],
-      "dwld_etx_fr": ["Pas disponible"]
+      "dwld_etx_fr": ["Sans objet"]
     },
     {
       "year": "2022",
@@ -41,7 +41,7 @@
       "lrge_pdf_en": ["Not available"],
       "lrge_pdf_fr": ["Sans objet"],
       "dwld_etx_en": ["Not available"],
-      "dwld_etx_fr": ["Pas disponible"]
+      "dwld_etx_fr": ["Sans objet"]
     },
     {
       "year": "2021",
@@ -52,7 +52,7 @@
       "lrge_pdf_en": ["Not available"],
       "lrge_pdf_fr": ["Sans objet"],
       "dwld_etx_en": ["Not available"],
-      "dwld_etx_fr": ["Pas disponible"]
+      "dwld_etx_fr": ["Sans objet"]
     },
     {
       "year": "2020",
@@ -74,7 +74,7 @@
       "lrge_pdf_en": ["Not available"],
       "lrge_pdf_fr": ["Sans objet"],
       "dwld_etx_en": ["Not available"],
-      "dwld_etx_fr": ["Pas disponible"]
+      "dwld_etx_fr": ["Sans objet"]
     },
     {
       "year": "2018",
@@ -85,7 +85,7 @@
       "lrge_pdf_en": ["Not available"],
       "lrge_pdf_fr": ["Sans objet"],
       "dwld_etx_en": ["Not available"],
-      "dwld_etx_fr": ["Pas disponible"]
+      "dwld_etx_fr": ["Sans objet"]
     },
     {
       "year": "2017",
@@ -96,6 +96,6 @@
       "lrge_pdf_en": ["Not available"],
       "lrge_pdf_fr": ["Sans objet"],
       "dwld_etx_en": ["Not available"],
-      "dwld_etx_fr": ["Pas disponible"]
+      "dwld_etx_fr": ["Sans objet"]
     }]
 }

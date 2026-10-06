@@ -74,7 +74,7 @@
       "lrge_pdf_en": ["Not available"],
       "lrge_pdf_fr": ["Sans objet"],
       "dwld_etx_en": ["Not available"],
-      "dwld_etx_fr": ["Pas disponible"]
+      "dwld_etx_fr": ["Sans objet"]
     },
     {
       "year": "2018",
@@ -85,7 +85,7 @@
       "lrge_pdf_en": ["2018 - Large print PDF", "/content/dam/cra-arc/formspubs/pbg/5013-d1/5013-d1-lp-18e.pdf"],
       "lrge_pdf_fr": ["2018 - PDF en gros caractères", "/content/dam/cra-arc/formspubs/pbg/5013-d1/5113-d1-lp-18f.pdf"],
       "dwld_etx_en": ["Not available"],
-      "dwld_etx_fr": ["Pas disponible"]
+      "dwld_etx_fr": ["Sans objet"]
     },
     {
       "year": "2017",
@@ -96,6 +96,6 @@
       "lrge_pdf_en": ["Not available"],
       "lrge_pdf_fr": ["Sans objet"],
       "dwld_etx_en": ["Not available"],
-      "dwld_etx_fr": ["Pas disponible"]
+      "dwld_etx_fr": ["Sans objet"]
     }]
 }
