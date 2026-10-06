@@ -1,4 +1,8 @@
 {
+  "5000-g": {
+    "kind": "general",
+    "html_profile": "general"
+  },
   "5001-pc": {
     "kind": "province",
     "name_en": "Newfoundland and Labrador",

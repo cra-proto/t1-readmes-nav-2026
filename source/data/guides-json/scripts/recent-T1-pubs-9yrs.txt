@@ -1,4 +1,4 @@
-# 5000-g / Must be updated manually
+# 5000-g / This one is best updated manually
 5001-pc
 5002-pc
 5003-pc

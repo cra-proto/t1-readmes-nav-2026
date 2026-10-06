@@ -461,6 +461,35 @@ function Get-GuideHtmlArrays {
   $labelEn = [string]$TemplateRow.html_acc_en[0]
   $labelFr = [string]$TemplateRow.html_acc_fr[0]
 
+  if ($Meta.kind -eq 'general') {
+    if ($Year -eq $CurrentYear) {
+      $enBase = "/content/canadasite/en/revenue-agency/services/forms-publications/tax-packages-years/general-income-tax-benefit-package"
+      $frBase = "/content/canadasite/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition/trousse-generale-impot-prestations"
+    } else {
+      $enBase = "/content/canadasite/en/revenue-agency/services/forms-publications/tax-packages-years/archived-general-income-tax-benefit-package-$Year"
+      $frBase = "/content/canadasite/fr/agence-revenu/services/formulaires-publications/trousses-impot-toutes-annees-imposition/archivee-trousse-generale-impot-prestations-$Year"
+    }
+
+    if ($Year -eq $CurrentYear -or [int]$Year -ge 2023) {
+      $enUrl = "$enBase/$GuideCode.html"
+      $frUrl = "$frBase/$GuideCode.html"
+    } elseif ([int]$Year -ge 2021) {
+      $enUrl = "$enBase/$GuideCode/income-tax-benefit-guide.html"
+      $frUrl = "$frBase/$GuideCode.html"
+    } elseif ([int]$Year -ge 2019) {
+      $enUrl = "$enBase/$GuideCode/income-tax-benefit-guide.html"
+      $frUrl = "$frBase/$GuideCode/guide-impot-prestations.html"
+    } else {
+      $enUrl = "$enBase/$GuideCode/general-income-tax-benefit-guide.html"
+      $frUrl = "$frBase/$GuideCode/guide-general-impot-prestations.html"
+    }
+
+    return [pscustomobject]@{
+      En = @($labelEn, $enUrl)
+      Fr = @($labelFr, $frUrl)
+    }
+  }
+
   if ($Meta.kind -eq 'non_resident') {
     if ($Year -eq $CurrentYear) {
       $enBase = "/content/canadasite/en/revenue-agency/services/forms-publications/tax-packages-years/general-income-tax-benefit-package/non-residents/$GuideCode"
@@ -503,6 +532,25 @@ function Get-GuideFileFamily {
     [Parameter(Mandatory)] [ValidateSet('en', 'fr')] [string]$Lang,
     [Parameter(Mandatory)] [ValidateSet('stnd_pdf', 'lrge_pdf', 'dwld_etx')] [string]$Field
   )
+
+  if ($GuideCode -eq '5000-g') {
+    if ([int]$Year -ge 2020) {
+      return '5000-g'
+    }
+
+    if ([int]$Year -ge 2018) {
+      if ($Lang -eq 'fr') { return '5100-g' }
+      return '5000-g'
+    }
+
+    if ($Field -in @('lrge_pdf', 'dwld_etx')) {
+      if ($Lang -eq 'fr') { return '5100-g' }
+      return '5000-g'
+    }
+
+    if ($Lang -eq 'fr') { return '5100g' }
+    return '5000g'
+  }
 
   if ($GuideCode -ne '5013-g') {
     if ($Lang -eq 'fr' -and [int]$Year -le 2019) {
@@ -605,6 +653,16 @@ function Build-GuideDocumentFromTemplate {
   }
 
   return [ordered]@{ data = $rows }
+}
+
+function Get-GuideOutputFileName {
+  param([Parameter(Mandatory)] [string]$GuideCode)
+
+  if ($GuideCode -eq '5000-g') {
+    return '5000-g-table-data-with-regions.json'
+  }
+
+  return "$GuideCode-table-data.json"
 }
 
 function Test-Url200 {
@@ -864,7 +922,7 @@ foreach ($pub in $pubsForGeneration) {
   $document = Build-GuideDocumentFromTemplate -TemplateDocument $templateDocument -GuideCode $pub -CurrentYear $currentGuideYear -MetadataMap $guideMetadataMap
   $outJson = (ConvertTo-TemplateJson -Document $document) + "`r`n"
   Assert-NoMojibakeText -Text $outJson -Context "$pub generated JSON"
-  $outPath = Join-Path $OutputDir "$pub-table-data.json"
+  $outPath = Join-Path $OutputDir (Get-GuideOutputFileName -GuideCode $pub)
 
   $generatedSources[$pub] = [pscustomobject]@{
     JsonText         = $outJson
@@ -903,7 +961,7 @@ foreach ($pub in $pubsForGeneration) {
     continue
   }
 
-  $outPath = Join-Path $OutputDir "$pub-table-data.json"
+  $outPath = Join-Path $OutputDir (Get-GuideOutputFileName -GuideCode $pub)
 
   if ($DryRun) {
     $generatedSource = $generatedSources[$pub]
