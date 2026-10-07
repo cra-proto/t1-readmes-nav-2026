@@ -3,6 +3,8 @@ Created by: Adam Monsour
 Initiated: August 15, 2017
 Modified by: Amber LeBlanc
 Modified date: August 1, 2023
+Modified by: Parissa Nahachewsky
+Modified date: October 10, 2026 (Updated excludes, metadata, alt format heading and text)
 -->
 
 <html   lang="eng"
@@ -25,12 +27,10 @@ Modified date: August 1, 2023
 		<meta name="description">((description))</meta>
 		<meta name="subject">((subject))</meta>
 		<meta name="gcAltLanguagePeer">/content/canadasite/fr/agence-revenu/services/formulaires-publications/formulaires/((name)).html</meta>
-		<meta name="contributor">((contributor))</meta>
-		<meta name="contentprovider">((contentprovider))</meta>
 		<meta name="otherName">((name))</meta>
 		<meta name="otherPath">/content/canadasite/fr/agence-revenu/services/formulaires-publications/formulaires/</meta>
-		<meta name="gcBranch">((gcBranch))</meta>
-		<meta name="contentprovider">((gcContributor))</meta>
+		<meta name="contributor">((contributor))</meta>
+		<meta name="contentprovider">((contentprovider))</meta>
         <meta name="gcModifiedOverride" format="yyyy-MM-dd">((pubDate))</meta>	
 	</header>
 	
